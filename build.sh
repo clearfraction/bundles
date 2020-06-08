@@ -1,0 +1,91 @@
+#!/bin/bash
+# based on https://docs.01.org/clearlinux/latest/guides/clear/swupd-3rd-party.html
+
+# Install the mixer tool and create workspace
+swupd bundle-add mixer package-utils 1>/dev/null
+dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
+dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 1>/dev/null
+dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 1>/dev/null
+dnf config-manager --add-repo https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/rpms/ 1>/dev/null
+
+# Import mixer config
+# curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
+# | grep browser_download_url \
+# | grep 'mixer' | cut -d '"' -f 4 \
+# | xargs -n 1 curl -L -o /tmp/mixer.tar
+# tar xf /tmp/mixer.tar -C / && cd /mixer
+
+# Create new mixer config
+mkdir ~/mixer && cd $_
+mixer init --no-default-bundles
+
+# Configure `builder.conf` to set the default bundle, CONTENTURL, and VERSIONURL
+mixer config set Swupd.BUNDLE "os-core"
+mixer config set Swupd.CONTENTURL "https://clearfraction.gitlab.io/updates"
+mixer config set Swupd.VERSIONURL "https://clearfraction.gitlab.io/updates"
+
+# Create an empty local os-core bundle. `swupd` client expects the os-core bundle to exist in a mix even if it’s empty.
+mixer bundle create os-core --local
+
+
+# Extract packages and manage content
+rm -rf /mixer/mixbundles
+pushd /home/configs
+for bundle in *
+do
+    dnf download --destdir=/tmp/$bundle `cat $bundle`
+    echo "content(/tmp/$bundle)" >> /mixer/local-bundles/$bundle
+    for rpm in /tmp/$bundle/*.rpm; do rpm2cpio $rpm | cpio -D /tmp/$bundle -idm && rm -rf $rpm; done
+done
+popd
+
+# Fix desktop entries
+pushd /home/icons
+apps='usr/share/applications'
+
+mv  mpv.desktop             /tmp/codecs/$apps
+mv *Foliate.desktop         /tmp/foliate/$apps
+mv *meteo.desktop           /tmp/meteo/$apps
+mv *PasswordSafe.desktop    /tmp/passwordsafe/$apps
+mv *Shotwell*.desktop       /tmp/shotwell/$apps
+mv *vocal.desktop           /tmp/vocal/$apps
+mv *Shortwave.desktop       /tmp/shortwave/$apps
+mv brave*.desktop           /tmp/brave/$apps
+mv codium*.desktop          /tmp/vscodium/$apps
+popd
+
+# Fix execs
+sed -i 's/\/usr\/share\//\/opt\/3rd-party\/bundles\/clearfraction\/usr\/share\//g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
+sed -i 's/\/usr\/lib64\//\/opt\/3rd-party\/bundles\/clearfraction\/usr\/lib64\//g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
+sed -i 's/"\/usr/"\/opt\/3rd-party\/bundles\/clearfraction\/usr/g' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
+
+
+# Add bundles to the mix
+mixer bundle add `ls /mixer/local-bundles`
+
+# Build the bundles and generate the update content
+mixer versions update
+mixer build bundles
+mixer build update
+
+
+# Generate artifacts
+mkdir -p /tmp/repo/update
+mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update
+tar cf /tmp/mixer.tar /mixer
+tar cf /tmp/repo.tar /tmp/repo
+# cd /tmp && git init && git -c user.name='CI' -c user.email='github@github.com' commit --allow-empty -m "Trigger Ci"
+# git push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/bundles.git master
+
+# Deploy
+curl -L https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2 -o /tmp/release.bz2
+bzip2 -d /tmp/*bz2 && chmod +x /tmp/release && mv /tmp/release /usr/bin/gr
+export RELEASE=`cat /mixer/mixversion`
+gr release --user clearfraction --repo bundles --tag $RELEASE --name v$RELEASE --description 'new release'
+gr upload  --user clearfraction --repo bundles --tag $RELEASE --name repo-$RELEASE.tar --file /tmp/repo.tar
+gr upload  --user clearfraction --repo bundles --tag $RELEASE --name mixer-$RELEASE.tar --file /tmp/mixer.tar
+
+
+
+
+

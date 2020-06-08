@@ -1,0 +1,8 @@
+os: linux
+dist: bionic
+language: generic
+services:
+  - docker
+script:
+  - chmod +x build.sh
+  - docker run --privileged --cap-add=SYS_ADMIN -e GITLAB_API_KEY=$GITLAB_API_KEY -e GITHUB_TOKEN=$GITHUB_TOKEN -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build.sh"

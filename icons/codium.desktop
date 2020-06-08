@@ -1,0 +1,18 @@
+[Desktop Entry]
+Name=VSCodium
+Comment=Code Editing. Redefined.
+GenericName=Text Editor
+Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --no-sandbox --unity-launch %F
+Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png
+Type=Application
+StartupNotify=false
+StartupWMClass=VSCodium
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=text/plain;inode/directory;
+Actions=new-empty-window;
+Keywords=vscode;
+
+[Desktop Action new-empty-window]
+Name=New Empty Window
+Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --no-sandbox --new-window %F
+Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png

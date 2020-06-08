@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+Name=Vocal
+Comment=Subscribe, download, and listen to podcasts
+GenericName=Podcast Manager
+Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas /opt/3rd-party/bin/com.github.needleandthread.vocal
+Icon=/opt/3rd-party/bundles/clearfraction/usr/share/icons/hicolor/scalable/apps/com.github.needleandthread.vocal-symbolic.svg
+Terminal=false
+Categories=AudioVideo;Audio;Video;
+X-PulseAudio-Properties=media.role=music
+Actions=AboutDialog;
+
+Name[en_US]=Vocal
+
+[Desktop Action AboutDialog]
+Exec=com.github.needleandthread.vocal --about
+Name=About Vocal
