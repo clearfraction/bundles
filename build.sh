@@ -88,8 +88,11 @@ curl -L https://github.com/github-release/github-release/releases/download/v0.8.
 bzip2 -d /tmp/*bz2 && chmod +x /tmp/release && mv /tmp/release /usr/bin/gr
 export RELEASE=`cat /mixer/mixversion`
 gr release --user clearfraction --repo bundles --tag $RELEASE --name v$RELEASE --description 'new release'
-gr upload  --user clearfraction --repo bundles --tag $RELEASE --name repo-$RELEASE.tar --file /tmp/repo.tar
 gr upload  --user clearfraction --repo bundles --tag $RELEASE --name mixer-$RELEASE.tar --file /tmp/mixer.tar
+gr upload  --user clearfraction --repo bundles --tag $RELEASE --name repo-$RELEASE.tar --file /tmp/repo.tar
+
+# Trigger GL CI
+curl -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
 
 
 
