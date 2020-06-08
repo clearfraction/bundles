@@ -1,6 +1,12 @@
 #!/bin/bash
 # based on https://docs.01.org/clearlinux/latest/guides/clear/swupd-3rd-party.html
 
+# Exit immediately if latest commit on tag
+git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
+if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]];
+    then exit 0;
+fi
+
 # Install the mixer tool and create workspace
 swupd bundle-add mixer package-utils 1>/dev/null
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
