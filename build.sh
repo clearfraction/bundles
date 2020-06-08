@@ -1,18 +1,18 @@
 #!/bin/bash
 # based on https://docs.01.org/clearlinux/latest/guides/clear/swupd-3rd-party.html
 
-# Exit immediately if latest commit on tag
-git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
-if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]];
-    then exit 0;
-fi
-
 # Install the mixer tool and create workspace
-swupd bundle-add mixer package-utils 1>/dev/null
+swupd bundle-add mixer package-utils git 1>/dev/null
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 1>/dev/null
 dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 1>/dev/null
 dnf config-manager --add-repo https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/rpms/ 1>/dev/null
+
+# Exit immediately if latest commit on tag
+git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
+if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]]
+   then exit 0
+fi
 
 # Import mixer config
 # curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
