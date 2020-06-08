@@ -15,15 +15,15 @@ if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]]
 fi
 
 # Import mixer config
-# curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
-# | grep browser_download_url \
-# | grep 'mixer' | cut -d '"' -f 4 \
-# | xargs -n 1 curl -L -o /tmp/mixer.tar
-# tar xf /tmp/mixer.tar -C / && cd /mixer
+curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
+| grep browser_download_url \
+| grep 'mixer' | cut -d '"' -f 4 \
+| xargs -n 1 curl -L -o /tmp/mixer.tar
+tar xf /tmp/mixer.tar -C / && cd /mixer
 
 # Create new mixer config
-mkdir ~/mixer && cd $_
-mixer init --no-default-bundles
+# mkdir ~/mixer && cd $_
+# mixer init --no-default-bundles
 
 # Configure `builder.conf` to set the default bundle, CONTENTURL, and VERSIONURL
 mixer config set Swupd.BUNDLE "os-core"
