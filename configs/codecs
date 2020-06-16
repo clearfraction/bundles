@@ -5,7 +5,6 @@ pulseaudio-lib
 jack2-lib
 gstreamer1-libav
 gsm-lib
-x264
 x264-libs 
 x265-libs
 libmp3lame0
@@ -21,3 +20,6 @@ mpv-data
 mpv-lib 
 libplacebo-lib 
 glslang-lib
+Vulkan-Loader-lib
+lensfun-lib
+SPIRV-Tools-bin
