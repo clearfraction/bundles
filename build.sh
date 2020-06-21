@@ -92,8 +92,7 @@ gr upload  --user clearfraction --repo bundles --tag $RELEASE --name mixer-$RELE
 gr upload  --user clearfraction --repo bundles --tag $RELEASE --name repo-$RELEASE.tar --file /tmp/repo.tar
 
 # Trigger GL CI
-curl -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
-
+curl -v -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
 
 
 
