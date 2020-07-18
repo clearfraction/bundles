@@ -83,7 +83,7 @@ tar cf /tmp/repo.tar /tmp/repo
 # cd /tmp && git init && git -c user.name='CI' -c user.email='github@github.com' commit --allow-empty -m "Trigger Ci"
 # git push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/bundles.git master
 
-# Deploy
+# Deploy to GH releases
 curl -L https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2 -o /tmp/release.bz2
 bzip2 -d /tmp/*bz2 && chmod +x /tmp/release && mv /tmp/release /usr/bin/gr
 export RELEASE=`cat /mixer/mixversion`
