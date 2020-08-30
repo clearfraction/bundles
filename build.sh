@@ -6,7 +6,7 @@ swupd bundle-add mixer package-utils git 1>/dev/null
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 1>/dev/null
 dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 1>/dev/null
-dnf config-manager --add-repo https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/rpms/ 1>/dev/null
+dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/ 1>/dev/null
 
 # Exit immediately if latest commit on tag
 git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
