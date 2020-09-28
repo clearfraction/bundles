@@ -74,7 +74,6 @@ mixer versions update
 mixer build bundles
 mixer build update
 
-
 # Generate artifacts
 mkdir -p /tmp/repo/update
 mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update
