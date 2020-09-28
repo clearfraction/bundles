@@ -14,6 +14,7 @@ if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]]
    then exit 0
 fi
 
+
 # Import mixer config
 curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
 | grep browser_download_url \
