@@ -18,7 +18,6 @@ libavdevice
 pulseaudio-lib
 jack2-lib
 gstreamer1-libav
-gsm-lib
 x264-libs 
 x265-libs
 libmp3lame0
