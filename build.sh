@@ -85,14 +85,14 @@ curl -s https://api.github.com/repos/clearfraction/bundles/releases \
 mkdir /tmp/old-manifests
 cat urls | while read line
 do 
-    curl -LO $line
+    curl -s -LO $line
     file=`basename $line`
-	 ver=`echo $file | sed -e s/[^0-9]//g`
-	 tar -xf $file tmp/repo/update/$ver && rm -f $file
-	 mv tmp/repo/update/$ver /tmp/old-manifests
-	 rm -rf tmp /tmp/old-manifests/$ver/files 2>/dev/null 1>/dev/null
-	 rm -rf /tmp/old-manifests/$ver/delta 2>/dev/null 1>/dev/null
-	 rm -rf /tmp/old-manifests/$ver/*.tar 2>/dev/null 1>/dev/null	 
+    ver=`echo $file | sed -e s/[^0-9]//g`
+    tar -xf $file tmp/repo/update/$ver && rm -f $file
+    mv tmp/repo/update/$ver /tmp/old-manifests
+    rm -rf tmp /tmp/old-manifests/$ver/files 2>/dev/null 1>/dev/null
+    rm -rf /tmp/old-manifests/$ver/delta 2>/dev/null 1>/dev/null
+    rm -rf /tmp/old-manifests/$ver/*.tar 2>/dev/null 1>/dev/null	 
 done
 
 # Generate artifacts
@@ -109,7 +109,7 @@ hub release edit $(find /tmp -type f -name "*.tar") -m "" $RELEASE
 hub release edit $(find . -type f -name "*.tar") -m "" $RELEASE
 
 # Trigger GL CI
-# curl -v -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
+# curl -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
 
 
 
