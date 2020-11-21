@@ -17,3 +17,9 @@ jobs:
           docker run --privileged --cap-add=SYS_ADMIN -e GITLAB_API_KEY="$GITLAB_API_KEY" -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build.sh"
         env:
           GITLAB_API_KEY: ${{ secrets.GITLAB_API_KEY }}
+      - name: Upload artifacts to GH releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag_name="${GITHUB_REF##*/}"
+          hub release edit $(find /tmp -type f -name "*.tar") -m "" "$tag_name" 
