@@ -1,0 +1,19 @@
+name: build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: build new release
+        run: |
+          chmod +x build.sh
+          docker run --privileged --cap-add=SYS_ADMIN -e GITLAB_API_KEY="$GITLAB_API_KEY" -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build.sh"
+        env:
+          GITLAB_API_KEY: ${{ secrets.GITLAB_API_KEY }}
