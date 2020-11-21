@@ -3,16 +3,16 @@
 
 # Install the mixer tool and create workspace
 swupd bundle-add mixer package-utils git 1>/dev/null
-dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 2>1>/dev/null
-dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 2>1>/dev/null
-dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 2>1>/dev/null
-dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/ 2>1>/dev/null
+dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
+dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 1>/dev/null
+dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 1>/dev/null
+dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/ 1>/dev/null
 
 # Exit immediately if latest commit on tag
-git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
-if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]]
-   then exit 0
-fi
+# git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
+# if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]]
+#   then exit 0
+#fi
 
 
 # Import mixer config
@@ -90,15 +90,15 @@ do
 	 ver=`echo $file | sed -e s/[^0-9]//g`
 	 tar -xf $file tmp/repo/update/$ver && rm -f $file
 	 mv tmp/repo/update/$ver /tmp/old-manifests
-	 rm -rf tmp /tmp/old-manifests/$ver/files
-	 rm -rf /tmp/old-manifests/$ver/delta
-	 rm -rf /tmp/old-manifests/$ver/*.tar	 
+	 rm -rf tmp /tmp/old-manifests/$ver/files 2>/dev/null 1>/dev/null
+	 rm -rf /tmp/old-manifests/$ver/delta 2>/dev/null 1>/dev/null
+	 rm -rf /tmp/old-manifests/$ver/*.tar 2>/dev/null 1>/dev/null	 
 done
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
 mv /tmp/old-manifests/* /tmp/repo/update
-mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update
+mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update 2>/dev/null 1>/dev/null
 tar cf /tmp/mixer.tar /mixer
 tar cf /tmp/repo.tar /tmp/repo
 
