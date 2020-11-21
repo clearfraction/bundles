@@ -103,12 +103,10 @@ tar cf /home/mixer.tar /mixer
 tar cf /home/repo.tar /tmp/repo
 
 # Deploy to GH releases
-# curl -L https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2 -o /tmp/release.bz2
-# bzip2 -d /tmp/*bz2 && chmod +x /tmp/release && mv /tmp/release /usr/bin/gr
 export RELEASE=`cat /mixer/mixversion`
-# gr release --user clearfraction --repo bundles --tag $RELEASE --name v$RELEASE --description 'new release'
-# gr upload  --user clearfraction --repo bundles --tag $RELEASE --name mixer-$RELEASE.tar --file /tmp/mixer.tar
-# gr upload  --user clearfraction --repo bundles --tag $RELEASE --name repo-$RELEASE.tar --file /tmp/repo.tar
+hub release create -m 'new release' $RELEASE
+hub release edit $(find /tmp -type f -name "*.tar") -m "" $RELEASE
+hub release edit $(find . -type f -name "*.tar") -m "" $RELEASE
 
 # Trigger GL CI
 # curl -v -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
