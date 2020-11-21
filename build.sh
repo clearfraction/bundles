@@ -49,7 +49,6 @@ popd
 # Fix desktop entries
 pushd /home/icons
 apps='usr/share/applications'
-
 mv  mpv.desktop             /tmp/codecs/$apps
 mv *Foliate.desktop         /tmp/foliate/$apps
 mv *meteo.desktop           /tmp/meteo/$apps
@@ -99,15 +98,13 @@ done
 mkdir -p /tmp/repo/update
 mv /tmp/old-manifests/* /tmp/repo/update
 mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update 2>/dev/null 1>/dev/null
-tar cf /home/mixer.tar /mixer
-tar cf /home/repo.tar /tmp/repo
+export RELEASE=`cat /mixer/mixversion`
+tar cf /home/mixer-$RELEASE.tar /mixer
+tar cf /home/repo-$RELEASE.tar /tmp/repo
 
 # Deploy to GH releases
-export RELEASE=`cat /mixer/mixversion`
-cd -
-hub release create -m 'new release' $RELEASE
-hub release edit $(find /tmp -type f -name "*.tar") -m "" $RELEASE
-hub release edit $(find . -type f -name "*.tar") -m "" $RELEASE
+cd /home
+hub release create -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar $RELEASE
 
 # Trigger GL CI
 # curl -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
