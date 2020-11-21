@@ -75,24 +75,43 @@ mixer versions update
 mixer build bundles
 mixer build update
 
+
+# Collect old manifests
+curl -s https://api.github.com/repos/clearfraction/bundles/releases \
+   | grep browser_download_url \
+   | grep 'repo' \
+   | cut -d '"' -f 4 > urls
+ 
+mkdir /tmp/old-manifests
+cat urls | while read line
+do 
+    curl -LO $line
+    file=`basename $line`
+	 ver=`echo $file | sed -e s/[^0-9]//g`
+	 tar -xvf $file tmp/repo/update/$ver && rm -f $file
+	 mv tmp/repo/update/$ver /tmp/old-manifests
+	 rm -rf tmp /tmp/old-manifests/$ver/files
+	 rm -rf /tmp/old-manifests/$ver/delta
+	 rm -rf /tmp/old-manifests/$ver/*.tar	 
+done
+
 # Generate artifacts
 mkdir -p /tmp/repo/update
+mv /tmp/old-manifests/* /tmp/repo/update
 mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update
 tar cf /tmp/mixer.tar /mixer
 tar cf /tmp/repo.tar /tmp/repo
-# cd /tmp && git init && git -c user.name='CI' -c user.email='github@github.com' commit --allow-empty -m "Trigger Ci"
-# git push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/bundles.git master
 
 # Deploy to GH releases
-curl -L https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2 -o /tmp/release.bz2
-bzip2 -d /tmp/*bz2 && chmod +x /tmp/release && mv /tmp/release /usr/bin/gr
+# curl -L https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2 -o /tmp/release.bz2
+# bzip2 -d /tmp/*bz2 && chmod +x /tmp/release && mv /tmp/release /usr/bin/gr
 export RELEASE=`cat /mixer/mixversion`
-gr release --user clearfraction --repo bundles --tag $RELEASE --name v$RELEASE --description 'new release'
-gr upload  --user clearfraction --repo bundles --tag $RELEASE --name mixer-$RELEASE.tar --file /tmp/mixer.tar
-gr upload  --user clearfraction --repo bundles --tag $RELEASE --name repo-$RELEASE.tar --file /tmp/repo.tar
+# gr release --user clearfraction --repo bundles --tag $RELEASE --name v$RELEASE --description 'new release'
+# gr upload  --user clearfraction --repo bundles --tag $RELEASE --name mixer-$RELEASE.tar --file /tmp/mixer.tar
+# gr upload  --user clearfraction --repo bundles --tag $RELEASE --name repo-$RELEASE.tar --file /tmp/repo.tar
 
 # Trigger GL CI
-curl -v -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
+# curl -v -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
 
 
 
