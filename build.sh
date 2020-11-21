@@ -104,6 +104,7 @@ tar cf /home/repo.tar /tmp/repo
 
 # Deploy to GH releases
 export RELEASE=`cat /mixer/mixversion`
+cd -
 hub release create -m 'new release' $RELEASE
 hub release edit $(find /tmp -type f -name "*.tar") -m "" $RELEASE
 hub release edit $(find . -type f -name "*.tar") -m "" $RELEASE
