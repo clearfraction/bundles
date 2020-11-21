@@ -3,10 +3,10 @@
 
 # Install the mixer tool and create workspace
 swupd bundle-add mixer package-utils git 1>/dev/null
-dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
-dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 1>/dev/null
-dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 1>/dev/null
-dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/ 1>/dev/null
+dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 2>1>/dev/null
+dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 2>1>/dev/null
+dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 2>1>/dev/null
+dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/ 2>1>/dev/null
 
 # Exit immediately if latest commit on tag
 git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
@@ -88,7 +88,7 @@ do
     curl -LO $line
     file=`basename $line`
 	 ver=`echo $file | sed -e s/[^0-9]//g`
-	 tar -xvf $file tmp/repo/update/$ver && rm -f $file
+	 tar -xf $file tmp/repo/update/$ver && rm -f $file
 	 mv tmp/repo/update/$ver /tmp/old-manifests
 	 rm -rf tmp /tmp/old-manifests/$ver/files
 	 rm -rf /tmp/old-manifests/$ver/delta
