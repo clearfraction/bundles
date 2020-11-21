@@ -99,8 +99,8 @@ done
 mkdir -p /tmp/repo/update
 mv /tmp/old-manifests/* /tmp/repo/update
 mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update 2>/dev/null 1>/dev/null
-tar cf /tmp/mixer.tar /mixer
-tar cf /tmp/repo.tar /tmp/repo
+tar cf /home/mixer.tar /mixer
+tar cf /home/repo.tar /tmp/repo
 
 # Deploy to GH releases
 # curl -L https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2 -o /tmp/release.bz2
