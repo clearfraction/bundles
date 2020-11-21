@@ -22,4 +22,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag_name="${GITHUB_REF##*/}"
-          hub release edit $(find /tmp -type f -name "*.tar") -m "" "$tag_name" 
+          hub release edit $(find . -type f -name "*.tar") -m "" "$tag_name" 
