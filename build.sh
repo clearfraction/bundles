@@ -107,7 +107,7 @@ cd /home
 hub release create -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar $RELEASE
 
 # Trigger GL CI
-# curl -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
+curl -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
 
 
 
