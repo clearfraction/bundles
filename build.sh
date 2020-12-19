@@ -4,6 +4,7 @@
 # Install the mixer tool and create workspace
 swupd bundle-add mixer package-utils git 1>/dev/null
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
+dnf -q -y install dnf rpm-python3 python-dateutil-python3
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 1>/dev/null
 dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 1>/dev/null
 dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/ 1>/dev/null
