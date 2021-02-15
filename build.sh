@@ -13,7 +13,7 @@ dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-rep
 # git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
 # if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]]
 #   then exit 0
-#fi
+# fi
 
 
 # Import mixer config
@@ -21,7 +21,7 @@ curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
 | grep browser_download_url \
 | grep 'mixer' | cut -d '"' -f 4 \
 | xargs -n 1 curl -L -o /tmp/mixer.tar
-tar xf /tmp/mixer.tar -C / && cd /mixer
+tar xf /tmp/mixer.tar -C / && rm -rf /tmp/mixer.tar && cd /mixer
 
 # Create new mixer config
 # mkdir ~/mixer && cd $_
@@ -41,7 +41,7 @@ rm -rf /mixer/mixbundles
 pushd /home/configs
 for bundle in *
 do
-    dnf download --destdir=/tmp/$bundle `cat $bundle`
+    dnf download --destdir=/tmp/$bundle `cat $bundle` || { echo "Failed to download $bundle content"; exit 1; }
     echo "content(/tmp/$bundle)" >> /mixer/local-bundles/$bundle
     for rpm in /tmp/$bundle/*.rpm; do rpm2cpio $rpm | cpio -D /tmp/$bundle -idm && rm -rf $rpm; done
 done
@@ -55,7 +55,7 @@ mv *Foliate.desktop         /tmp/foliate/$apps
 mv *meteo.desktop           /tmp/meteo/$apps
 mv *PasswordSafe.desktop    /tmp/passwordsafe/$apps
 mv *Shotwell*.desktop       /tmp/shotwell/$apps
-mv *vocal.desktop           /tmp/vocal/$apps
+mv *planner.desktop         /tmp/planner/$apps
 mv *Shortwave.desktop       /tmp/shortwave/$apps
 mv brave*.desktop           /tmp/brave/$apps
 mv codium*.desktop          /tmp/vscodium/$apps
