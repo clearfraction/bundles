@@ -36,3 +36,4 @@ glslang-lib
 Vulkan-Loader-lib
 lensfun-lib
 SPIRV-Tools-bin
+gsm-lib
