@@ -92,7 +92,7 @@ do
     mv tmp/repo/update/$ver /tmp/old-manifests
     rm -rf tmp /tmp/old-manifests/$ver/files 2>/dev/null 1>/dev/null
     rm -rf /tmp/old-manifests/$ver/delta 2>/dev/null 1>/dev/null
-    rm -rf /tmp/old-manifests/$ver/*.tar 2>/dev/null 1>/dev/null	 
+ #  rm -rf /tmp/old-manifests/$ver/*.tar 2>/dev/null 1>/dev/null	 
 done
 
 # Generate artifacts
