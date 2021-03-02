@@ -75,29 +75,8 @@ mixer versions update
 mixer build bundles
 mixer build update
 
-
-# Collect old manifests
-curl -s https://api.github.com/repos/clearfraction/bundles/releases \
-   | grep browser_download_url \
-   | grep 'repo' \
-   | cut -d '"' -f 4 > urls
- 
-mkdir /tmp/old-manifests
-cat urls | while read line
-do 
-    curl -s -LO $line
-    file=`basename $line`
-    ver=`echo $file | sed -e s/[^0-9]//g`
-    tar -xf $file tmp/repo/update/$ver && rm -f $file
-    mv tmp/repo/update/$ver /tmp/old-manifests
-    rm -rf tmp /tmp/old-manifests/$ver/files 2>/dev/null 1>/dev/null
-    rm -rf /tmp/old-manifests/$ver/delta 2>/dev/null 1>/dev/null
- #  rm -rf /tmp/old-manifests/$ver/*.tar 2>/dev/null 1>/dev/null	 
-done
-
 # Generate artifacts
 mkdir -p /tmp/repo/update
-mv /tmp/old-manifests/* /tmp/repo/update
 mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update 2>/dev/null 1>/dev/null
 export RELEASE=`cat /mixer/mixversion`
 tar cf /home/mixer-$RELEASE.tar /mixer
