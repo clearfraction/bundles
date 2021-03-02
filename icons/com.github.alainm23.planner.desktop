@@ -107,7 +107,7 @@ Comment[nb_NO]=Aldri uroe deg over å glemme noe igjen
 Comment[zh_Hans]=不要担心再次忘记事情
 Comment=Never worry about forgetting things again
 Categories=Utility;Office;ProjectManagement;Calendar;
-Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas /opt/3rd-party/bin/com.github.alainm23.planner
+Exec=env GTK_THEME=Adwaita:dark GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas /opt/3rd-party/bin/com.github.alainm23.planner
 Icon=/opt/3rd-party/bundles/clearfraction/usr/share/icons/hicolor/128x128/apps/com.github.alainm23.planner.svg
 Terminal=false
 Type=Application
