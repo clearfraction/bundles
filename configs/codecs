@@ -14,7 +14,6 @@ opus-lib
 speex-lib
 libvorbis-lib
 numactl-lib
-libavdevice
 pulseaudio-lib
 jack2-lib
 gstreamer1-libav
