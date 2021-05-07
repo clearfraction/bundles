@@ -1,6 +1,2 @@
 shortwave
-libadwaita
-gtk4
-gtk4-bin
-gtk4-data
-gtk4-lib
+libadwaita-lib
