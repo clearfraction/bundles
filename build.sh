@@ -2,18 +2,12 @@
 # based on https://docs.01.org/clearlinux/latest/guides/clear/swupd-3rd-party.html
 
 # Install the mixer tool and create workspace
-swupd bundle-add mixer package-utils git 1>/dev/null
-dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/ 1>/dev/null
-dnf -q -y install dnf rpm-python3 python-dateutil-python3
-dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/ 1>/dev/null
-dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/ 1>/dev/null
-dnf config-manager --add-repo https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/ 1>/dev/null
-
-# Exit immediately if latest commit on tag
-# git clone https://github.com/clearfraction/bundles.git /tmp/temprepo
-# if [[ $(git -C /tmp/temprepo tag --points-at HEAD) ]]
-#   then exit 0
-# fi
+swupd update --quiet
+swupd bundle-add mixer package-utils git --quiet 
+shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog'
+dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os
+dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos
+dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64
 
 
 # Import mixer config
@@ -52,19 +46,19 @@ pushd /home/icons
 apps='usr/share/applications'
 mv  mpv.desktop             /tmp/codecs/$apps
 mv *Foliate.desktop         /tmp/foliate/$apps
-mv *meteo.desktop           /tmp/meteo/$apps
 mv *PasswordSafe.desktop    /tmp/passwordsafe/$apps
 mv *Shotwell*.desktop       /tmp/shotwell/$apps
 mv *planner.desktop         /tmp/planner/$apps
 mv *Shortwave.desktop       /tmp/shortwave/$apps
 mv brave*.desktop           /tmp/brave/$apps
 mv codium*.desktop          /tmp/vscodium/$apps
+mv *Fractal.desktop         /tmp/fractal/$apps
+
 popd
 
 # Fix execs
-sed -i 's/\/usr\/share\//\/opt\/3rd-party\/bundles\/clearfraction\/usr\/share\//g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
-sed -i 's/\/usr\/lib64\//\/opt\/3rd-party\/bundles\/clearfraction\/usr\/lib64\//g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
-sed -i 's/"\/usr/"\/opt\/3rd-party\/bundles\/clearfraction\/usr/g' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
+sed -i 's|/usr|/opt/3rd-party/bundles/clearfraction/usr|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
+sed -i 's|/usr|/opt/3rd-party/bundles/clearfraction/usr|g' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
 
 
 # Add bundles to the mix
@@ -77,7 +71,7 @@ mixer build update
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
-mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update 2>/dev/null 1>/dev/null
+mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update 2>&1 1>/dev/null
 export RELEASE=`cat /mixer/mixversion`
 tar cf /home/mixer-$RELEASE.tar /mixer
 tar cf /home/repo-$RELEASE.tar /tmp/repo
