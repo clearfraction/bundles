@@ -14,7 +14,7 @@ dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86
 curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
 | grep browser_download_url \
 | grep 'mixer' | cut -d '"' -f 4 \
-| xargs -n 1 curl -L -o /tmp/mixer.tar
+| xargs -n 1 curl -L -o /tmp/mixer.tar || { echo "Failed to download mixer state"; exit 1; }
 tar xf /tmp/mixer.tar -C / && rm -rf /tmp/mixer.tar && cd /mixer
 
 # Create new mixer config
