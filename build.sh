@@ -59,7 +59,7 @@ popd
 # Fix execs
 sed -i 's|/usr/share/|/opt/3rd-party/bundles/clearfraction/usr/share/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
 sed -i 's|/usr/lib64/|/opt/3rd-party/bundles/clearfraction/usr/lib64/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
-sed -i 's|"/usr/"|"/opt/3rd-party/bundles/clearfraction/usr"|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
+sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
