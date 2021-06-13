@@ -34,5 +34,5 @@ libplacebo-lib
 glslang-lib
 Vulkan-Loader-lib
 lensfun-lib
-SPIRV-Tools-bin
+SPIRV-Headers
 gsm-lib
