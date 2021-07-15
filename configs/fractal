@@ -1,5 +1,3 @@
 fractal
 gst-editing-services
-libadwaita-lib
-pcre2-lib
-gtksourceview5-lib
+libhandy-lib
