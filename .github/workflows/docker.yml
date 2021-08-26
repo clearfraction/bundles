@@ -1,4 +1,4 @@
-name: Build Docker image
+name: Docker
 on: 
   workflow_dispatch:
   
@@ -9,7 +9,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: CI & CD
+      - name: Credentials
+        env: 
+          EMAIL: ${{ secrets.EMAIL }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          cat > ~/.netrc <<EOF
+            machine api.heroku.com
+              login $EMAIL
+              password $API_KEY
+          EOF
+      - name: CD
         env:
           APP: "clearfraction"
           EMAIL: ${{ secrets.EMAIL }}
