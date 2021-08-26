@@ -13,7 +13,7 @@ jobs:
         env:
           APP: "clearfraction"
           EMAIL: ${{ secrets.EMAIL }}
-          API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          API_KEY: ${{ secrets.API_KEY }}
           DOCKER_OPTIONS: "--no-cache"
         run: |
           echo ${API_KEY} | docker login \
