@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build and push Docker to Heroku
+      - name: CI & CD
         env:
           APP: "clearfraction"
           EMAIL: ${{ secrets.EMAIL }}
@@ -21,7 +21,6 @@ jobs:
             registry.heroku.com \
             --password-stdin
           docker build \
-            --file Dockerfile \
             ${DOCKER_OPTIONS} \
             --tag registry.heroku.com/clearfraction/web .
           heroku container:push web --app ${APP}
