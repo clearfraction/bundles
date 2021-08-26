@@ -1,0 +1,28 @@
+name: Build Docker image
+on: 
+  workflow_dispatch:
+  
+jobs:
+  build:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push Docker to Heroku
+        env:
+          APP: "clearfraction"
+          EMAIL: ${{ secrets.EMAIL }}
+          API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          DOCKER_OPTIONS: "--no-cache"
+        run: |
+          echo ${API_KEY} | docker login \
+            --username=${EMAIL} \
+            registry.heroku.com \
+            --password-stdin
+          docker build \
+            --file Dockerfile \
+            ${DOCKER_OPTIONS} \
+            --tag registry.heroku.com/clearfraction/web .
+          heroku container:push web --app ${APP}
+          heroku container:release web --app ${APP}
