@@ -25,7 +25,7 @@ snappy-lib
 LuaJIT-lib  
 pulseaudio-lib
 libass
-libdav1d
+dav1d-lib
 mpv
 mpv-bin
 mpv-data 
@@ -34,5 +34,5 @@ libplacebo-lib
 glslang-lib
 Vulkan-Loader-lib
 lensfun-lib
-SPIRV-Headers
+SPIRV-Tools-bin
 gsm-lib
