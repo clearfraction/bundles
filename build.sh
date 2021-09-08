@@ -4,7 +4,7 @@
 # Install the mixer tool and create workspace
 swupd update --quiet
 swupd bundle-add mixer package-utils git --quiet 
-shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog'
+shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos
 dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64
