@@ -1,4 +1,4 @@
-name: Docker
+name: docker
 on: 
   workflow_dispatch:
   
@@ -33,5 +33,4 @@ jobs:
           docker build \
             ${DOCKER_OPTIONS} \
             --tag registry.heroku.com/clearfraction/web .
-          heroku container:push web --app ${APP}
-          heroku container:release web --app ${APP}
+          heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
