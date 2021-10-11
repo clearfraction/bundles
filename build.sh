@@ -24,8 +24,8 @@ tar xf /tmp/mixer.tar -C / && rm -rf /tmp/mixer.tar && cd /mixer
 
 # Configure `builder.conf` to set the default bundle, CONTENTURL, and VERSIONURL
 mixer config set Swupd.BUNDLE "os-core"
-mixer config set Swupd.CONTENTURL "https://clearfraction.gitlab.io/updates"
-mixer config set Swupd.VERSIONURL "https://clearfraction.gitlab.io/updates"
+mixer config set Swupd.CONTENTURL "https://clearfraction.herokuapp.com/update"
+mixer config set Swupd.VERSIONURL "https://clearfraction.herokuapp.com/update"
 
 # Create an empty local os-core bundle. `swupd` client expects the os-core bundle to exist in a mix even if it’s empty.
 mixer bundle create os-core --local
