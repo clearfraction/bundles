@@ -1,7 +1,9 @@
 name: bundler
 on:
   workflow_dispatch:
-
+  repository_dispatch:
+    types: [opened, deleted]
+    
 jobs:
   mixer:
     runs-on: ubuntu-latest
@@ -14,8 +16,7 @@ jobs:
         env:
           GITLAB_API_KEY: ${{ secrets.GITLAB_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GL_TRIGGER: ${{ secrets.GL_TRIGGER }}
-
+      
   docker:
     name: Build Docker image
     runs-on: ubuntu-latest
