@@ -65,7 +65,7 @@ sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/
 mixer bundle add `ls /mixer/local-bundles`
 
 # Build the bundles and generate the update content
-mixer versions update
+echo $((`curl -s https://download.clearlinux.org/latest`+1)) > /mixer/mixversion
 mixer build bundles
 mixer build update
 
