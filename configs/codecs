@@ -20,7 +20,7 @@ gstreamer1-libav
 x264-libs 
 x265-libs
 libmp3lame0
-fdk-aac-free
+fdk-aac
 snappy-lib 
 LuaJIT-lib  
 pulseaudio-lib
