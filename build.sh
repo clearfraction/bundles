@@ -1,13 +1,14 @@
 #!/bin/bash
-# based on https://docs.01.org/clearlinux/latest/guides/clear/swupd-3rd-party.html
+# docs - https://docs.01.org/clearlinux/latest/guides/clear/swupd-3rd-party.html
 
 # Install the mixer tool and create workspace
 swupd update --quiet
 swupd bundle-add mixer package-utils git --quiet 
 shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
-dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os
-dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos
-dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64
+createrepo_c -q /home/artifact/
+dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
+                   --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64 \
+                   --add-repo file:///home/artifact
 
 
 # Import mixer config
@@ -48,7 +49,6 @@ mv  mpv.desktop             /tmp/codecs/$apps
 mv *Foliate.desktop         /tmp/foliate/$apps
 mv *PasswordSafe.desktop    /tmp/passwordsafe/$apps
 mv *Shotwell*.desktop       /tmp/shotwell/$apps
-mv *planner.desktop         /tmp/planner/$apps
 mv *Shortwave.desktop       /tmp/shortwave/$apps
 mv brave*.desktop           /tmp/brave/$apps
 mv codium*.desktop          /tmp/vscodium/$apps
@@ -75,14 +75,10 @@ mv /mixer/update/www/* /tmp/repo/update && rm -rf /mixer/update 2>&1 1>/dev/null
 export RELEASE=`cat /mixer/mixversion`
 tar cf /home/mixer-$RELEASE.tar /mixer
 tar cf /home/repo-$RELEASE.tar /tmp/repo
+mv /home/artifact /home/packages && tar cf /home/packages-$RELEASE.tar /home/packages
 
 # Deploy to GH releases
 cd /home
-hub release create -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar $RELEASE
-
-# Trigger GL CI
-curl -X POST -F token=$GL_TRIGGER -F ref=master https://gitlab.com/api/v4/projects/19115836/trigger/pipeline
-
-
+hub release create -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar $RELEASE
 
 
