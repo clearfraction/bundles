@@ -15,6 +15,12 @@ jobs:
           repo: clearfraction/mass-rebuild
           workflow: mass-rebuild.yml
           check_artifacts: true
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          repo: clearfraction/shortwave
+          workflow: build.yml
+          check_artifacts: true
       - name: Build new release
         run: |
           chmod +x build.sh
