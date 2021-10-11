@@ -1,0 +1,49 @@
+name: bundler
+on:
+  workflow_dispatch:
+
+jobs:
+  mixer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build new release
+        run: |
+          chmod +x build.sh
+          docker run --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined -e GITLAB_API_KEY="$GITLAB_API_KEY" -e GITHUB_TOKEN="$GITHUB_TOKEN" -e GITHUB_USER=paulcarroty -e GL_TRIGGER="$GL_TRIGGER" -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build.sh"
+        env:
+          GITLAB_API_KEY: ${{ secrets.GITLAB_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GL_TRIGGER: ${{ secrets.GL_TRIGGER }}
+
+  docker:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Credentials
+        env: 
+          EMAIL: ${{ secrets.EMAIL }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          cat > ~/.netrc <<EOF
+            machine api.heroku.com
+              login $EMAIL
+              password $API_KEY
+          EOF
+      - name: CD
+        env:
+          APP: "clearfraction"
+          EMAIL: ${{ secrets.EMAIL }}
+          API_KEY: ${{ secrets.API_KEY }}
+          DOCKER_OPTIONS: "--no-cache"
+        run: |
+          echo ${API_KEY} | docker login \
+            --username=${EMAIL} \
+            registry.heroku.com \
+            --password-stdin
+          docker build \
+            ${DOCKER_OPTIONS} \
+            --tag registry.heroku.com/clearfraction/web .
+          heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
