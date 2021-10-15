@@ -42,24 +42,15 @@ do
 done
 popd
 
-# Fix desktop entries
-pushd /home/icons
-apps='usr/share/applications'
-mv  mpv.desktop             /tmp/codecs/$apps
-mv *Foliate.desktop         /tmp/foliate/$apps
-mv *PasswordSafe.desktop    /tmp/passwordsafe/$apps
-mv *Shotwell*.desktop       /tmp/shotwell/$apps
-mv *Shortwave.desktop       /tmp/shortwave/$apps
-mv brave*.desktop           /tmp/brave/$apps
-mv codium*.desktop          /tmp/vscodium/$apps
-mv *Fractal.desktop         /tmp/fractal/$apps
-
-popd
-
 # Fix execs
 sed -i 's|/usr/share/|/opt/3rd-party/bundles/clearfraction/usr/share/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
 sed -i 's|/usr/lib64/|/opt/3rd-party/bundles/clearfraction/usr/lib64/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
 sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
+ln -sf /tmp/brave/opt/brave.com/brave/brave-browser /opt/3rd-party/bundles/clearfraction/usr/bin/brave-browser-stable
+sed -i 's|Icon=brave-browser|Icon=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/product_logo_128.png|' /tmp/brave/usr/share/applications/brave-browser.desktop
+sed -i 's|Exec=/usr/bin/brave-browser-stable %U|brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --disk-cache-dir=/tmp/brave %U|' /tmp/brave/usr/share/applications/brave-browser.desktop
+sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --disk-cache-dir=/tmp/brave|' /tmp/brave/usr/share/applications/brave-browser.desktop
+sed -i 's|Exec=/usr/bin/brave-browser-stable --incognito|Exec=brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --incognito --disk-cache-dir=/tmp/brave|' /tmp/brave/usr/share/applications/brave-browser.desktop
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
