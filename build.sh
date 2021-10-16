@@ -54,10 +54,12 @@ ln -sf /tmp/brave/opt/brave.com/brave/brave-browser /opt/3rd-party/bundles/clear
 sed -i 's|Icon=brave-browser|Icon=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/product_logo_128.png|' /tmp/brave/usr/share/applications/brave-browser.desktop
 sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/brave/usr/share/applications/brave-browser.desktop
 
+sed -i 's|Icon=vscodium|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png|g' /tmp/codium/usr/share/applications/codium*.desktop
 sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/codium/usr/share/applications/codium*.desktop
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' tmp/shotwell/usr/share/applications/*Shotwell*.desktop
 sed -i 's|Exec=fractal|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ fractal|' tmp/fractal/usr/share/applications/*Fractal.desktop
+sed -i 's|Exec=shortwave|Exec=env GST_PLUGIN_PATH_1_0=/opt/3rd-party/bundles/clearfraction/usr/lib64/gstreamer-1.0 GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas shortwave|' tmp/shortwave/usr/share/applications/*Shortwave.desktop
 
 
 # Add bundles to the mix
