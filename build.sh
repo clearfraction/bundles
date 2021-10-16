@@ -45,10 +45,10 @@ popd
 # Fix execs
 sed -i 's|/usr/share/|/opt/3rd-party/bundles/clearfraction/usr/share/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
 sed -i 's|/usr/lib64/|/opt/3rd-party/bundles/clearfraction/usr/lib64/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
-sed -i 's|Exec=gnome-passwordsafe|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction/usr/lib/python3.9/site-packages gnome-passwordsafe|' tmp/passwordsafe/usr/share/applications/*PasswordSafe.desktop
+sed -i 's|Exec=gnome-passwordsafe|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction/usr/lib/python3.9/site-packages gnome-passwordsafe|' /tmp/passwordsafe/usr/share/applications/*PasswordSafe.desktop
 
 sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
-sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ com.github.johnfactotum.Foliate|' tmp/foliate/usr/share/applications/*Foliate.desktop
+sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ com.github.johnfactotum.Foliate|' /tmp/foliate/usr/share/applications/*Foliate.desktop
 
 ln -sf /tmp/brave/opt/brave.com/brave/brave-browser /opt/3rd-party/bundles/clearfraction/usr/bin/brave-browser-stable
 sed -i 's|Icon=brave-browser|Icon=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/product_logo_128.png|' /tmp/brave/usr/share/applications/brave-browser.desktop
@@ -57,9 +57,12 @@ sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=brave-browser-stable --enable-
 sed -i 's|Icon=vscodium|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png|g' /tmp/codium/usr/share/applications/codium*.desktop
 sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/codium/usr/share/applications/codium*.desktop
 
-sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' tmp/shotwell/usr/share/applications/*Shotwell*.desktop
-sed -i 's|Exec=fractal|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ fractal|' tmp/fractal/usr/share/applications/*Fractal.desktop
-sed -i 's|Exec=shortwave|Exec=env GST_PLUGIN_PATH_1_0=/opt/3rd-party/bundles/clearfraction/usr/lib64/gstreamer-1.0 GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas shortwave|' tmp/shortwave/usr/share/applications/*Shortwave.desktop
+sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
+sed -i 's|Exec=fractal|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ fractal|' /tmp/fractal/usr/share/applications/*Fractal.desktop
+
+sed -i 's|Icon=de.haeckerfelix.Shortwave|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/icons/hicolor/scalable/apps/de.haeckerfelix.Shortwave.svg|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
+sed -i 's|Exec=shortwave|Exec=env GST_PLUGIN_PATH_1_0=/opt/3rd-party/bundles/clearfraction/usr/lib64/gstreamer-1.0 GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas shortwave|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
+
 
 
 # Add bundles to the mix
