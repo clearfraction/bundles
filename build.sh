@@ -45,12 +45,20 @@ popd
 # Fix execs
 sed -i 's|/usr/share/|/opt/3rd-party/bundles/clearfraction/usr/share/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
 sed -i 's|/usr/lib64/|/opt/3rd-party/bundles/clearfraction/usr/lib64/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
+sed -i 's|Exec=gnome-passwordsafe|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction/usr/lib/python3.9/site-packages gnome-passwordsafe|' tmp/passwordsafe/usr/share/applications/*PasswordSafe.desktop
+
 sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
+sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ com.github.johnfactotum.Foliate|' tmp/foliate/usr/share/applications/*Foliate.desktop
+
 ln -sf /tmp/brave/opt/brave.com/brave/brave-browser /opt/3rd-party/bundles/clearfraction/usr/bin/brave-browser-stable
 sed -i 's|Icon=brave-browser|Icon=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/product_logo_128.png|' /tmp/brave/usr/share/applications/brave-browser.desktop
-sed -i 's|Exec=/usr/bin/brave-browser-stable %U|brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --disk-cache-dir=/tmp/brave %U|' /tmp/brave/usr/share/applications/brave-browser.desktop
-sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --disk-cache-dir=/tmp/brave|' /tmp/brave/usr/share/applications/brave-browser.desktop
-sed -i 's|Exec=/usr/bin/brave-browser-stable --incognito|Exec=brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --incognito --disk-cache-dir=/tmp/brave|' /tmp/brave/usr/share/applications/brave-browser.desktop
+sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=brave-browser-stable --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/brave/usr/share/applications/brave-browser.desktop
+
+sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/codium/usr/share/applications/codium*.desktop
+
+sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' tmp/shotwell/usr/share/applications/*Shotwell*.desktop
+sed -i 's|Exec=fractal|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ fractal|' tmp/fractal/usr/share/applications/*Fractal.desktop
+
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
