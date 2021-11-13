@@ -61,7 +61,7 @@ sed -i 's|Exec=fractal|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clea
 
 sed -i 's|Icon=de.haeckerfelix.Shortwave|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/icons/hicolor/scalable/apps/de.haeckerfelix.Shortwave.svg|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
 sed -i 's|Exec=shortwave|Exec=env GST_PLUGIN_PATH_1_0=/opt/3rd-party/bundles/clearfraction/usr/lib64/gstreamer-1.0 GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas shortwave|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
-
+sed -i 's|DBusActivatable=true|DBusActivatable=false|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
 
 
 # Add bundles to the mix
