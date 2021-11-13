@@ -53,3 +53,4 @@ jobs:
             ${DOCKER_OPTIONS} \
             --tag registry.heroku.com/clearfraction/web .
           heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
+          rm -f ~/.netrc
