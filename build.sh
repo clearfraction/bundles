@@ -53,8 +53,8 @@ sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/op
 sed -i 's|Icon=brave-browser|Icon=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/product_logo_128.png|' /tmp/brave/usr/share/applications/brave-browser.desktop
 sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/brave-browser --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/brave/usr/share/applications/brave-browser.desktop
 
-sed -i 's|Icon=vscodium|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png|g' /tmp/codium/usr/share/applications/codium*.desktop
-sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/codium/usr/share/applications/codium*.desktop
+sed -i 's|Icon=vscodium|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png|g' /tmp/vscodium/usr/share/applications/codium*.desktop
+sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/vscodium/usr/share/applications/codium*.desktop
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
 sed -i 's|Exec=fractal|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ fractal|' /tmp/fractal/usr/share/applications/*Fractal.desktop
