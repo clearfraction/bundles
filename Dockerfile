@@ -12,18 +12,11 @@ server { \n\
 } \n\  
 " > /etc/nginx/conf.d/mixer-server.conf \
 && mkdir /tmp/update \
-&& curl -s https://api.github.com/repos/clearfraction/bundles/releases/latest \
-      | grep browser_download_url | grep 'repo'  \
-      | cut -d '"' -f 4 | xargs -n 1 curl -s -L -o /tmp/latest.tar \
-&& tar xf /tmp/latest.tar -C /tmp && mv /tmp/tmp/repo/update/* /tmp/update \
-&& curl -s https://api.github.com/repos/clearfraction/bundles/releases \
+&& curl --retry 3 -s https://api.github.com/repos/clearfraction/bundles/releases \
       | grep browser_download_url  | grep 'repo' \
-      | cut -d '"' -f 4 | sed '1d' | head -n 2 > /tmp/urls \
-&& cat /tmp/urls | while read line; do curl -s -LO $line \
-    && file=`basename $line` \
-    && ver=`echo $file | sed -e s/[^0-9]//g` \
-    && tar xf $file tmp/repo/update/$ver -C /tmp && rm -f $file \
-    && mv /tmp/repo/update/$ver /tmp/update; \
+      | cut -d '"' -f 4 | head -n 5 > /tmp/urls \
+&& tac /tmp/urls | while read line; do curl --retry 3 -s -LO $line \
+    && tar xf `basename $line` --strip-components=3 -C /tmp/update && rm -f `basename $line`; \
     done \
 && mv /tmp/update /var/www/ && rm -rf /tmp/*
 CMD /usr/bin/sed -i 's/DEFAULT/'"$PORT"'/'  /etc/nginx/conf.d/mixer-server.conf && /usr/bin/nginx -g 'daemon off;'

@@ -7,20 +7,26 @@ on:
 jobs:
   mixer:
     runs-on: ubuntu-latest
+    container: 
+      image: clearlinux:latest
+      options: --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined
     steps:
-      - uses: actions/checkout@v2
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2
         with:
           repo: clearfraction/mass-rebuild
           workflow: mass-rebuild.yml
           check_artifacts: true
+          path: /home
       - name: Build new release
+        shell: bash
         run: |
-          chmod +x build.sh
-          docker run --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined -e GITHUB_TOKEN="$GITHUB_TOKEN" -e GITHUB_USER=paulcarroty -v $(pwd):/home clearlinux:latest sh -c "cd /home && ./build.sh"
+          swupd bundle-add curl --quiet
+          cd /home && curl -s -LO https://github.com/clearfraction/bundles/raw/master/build.sh && chmod +x build.sh
+          ./build.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: paulcarroty
       
   docker:
     needs: mixer
