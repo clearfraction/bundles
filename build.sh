@@ -104,7 +104,7 @@ mv /home/artifact /home/packages && tar cf /home/packages-$RELEASE.tar /home/pac
 
 # Deploy to GH releases
 cd /home
-hub release create -m v$RELEASE $RELEASE
+hub release create -m v$RELEASE $RELEASE || { echo "Fatal: tag already exists"; exit 1; }
 for i in {1..5}; do 
   hub release edit $RELEASE -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
   sleep 100
