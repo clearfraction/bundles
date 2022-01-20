@@ -61,9 +61,8 @@ popd
 
 # Fix execs
 export PYTHONDIR=`echo /usr/lib/python*`
-sed -i 's|/usr/share/|/opt/3rd-party/bundles/clearfraction/usr/share/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
-sed -i 's|/usr/lib64/|/opt/3rd-party/bundles/clearfraction/usr/lib64/|g' /tmp/passwordsafe/usr/bin/gnome-passwordsafe
-sed -i 's|Exec=gnome-passwordsafe|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction'"$PYTHONDIR"'/site-packages gnome-passwordsafe|' /tmp/passwordsafe/usr/share/applications/*PasswordSafe.desktop
+sed -i 's|const.PKGDATADIR|"/opt/3rd-party/bundles/clearfraction/usr/share/"|g' /tmp/secrets/usr/bin/secrets
+sed -i 's|Exec=secrets|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction'"$PYTHONDIR"'/site-packages secrets|' /tmp/secrets/usr/share/applications/*Secrets.desktop
 
 sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
 sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ com.github.johnfactotum.Foliate|' /tmp/foliate/usr/share/applications/*Foliate.desktop
