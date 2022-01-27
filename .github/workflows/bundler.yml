@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: clearlinux:latest
-      options: --privileged --cap-add=SYS_ADMIN --security-opt apparmor:unconfined
+      options: --privileged --cap-add=SYS_ADMIN
     steps:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2
@@ -59,4 +59,4 @@ jobs:
             ${DOCKER_OPTIONS} \
             --tag registry.heroku.com/clearfraction/web .
           heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
-          rm -f ~/.netrc /home/runner/.docker/config.json.
+          rm -rf ~/.netrc /home/runner/.docker
