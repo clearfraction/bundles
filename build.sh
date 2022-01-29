@@ -61,8 +61,8 @@ popd
 
 # Fix execs
 export PYTHONDIR=`echo /usr/lib/python*`
-sed -i 's|const.PKGDATADIR|"/opt/3rd-party/bundles/clearfraction/usr/share/"|g' /tmp/secrets/usr/bin/secrets
-sed -i 's|Exec=secrets|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction'"$PYTHONDIR"'/site-packages secrets|' /tmp/secrets/usr/share/applications/*Secrets.desktop
+sed -i 's|const.PKGDATADIR|"/opt/3rd-party/bundles/clearfraction/usr/share/secrets"|g' /tmp/secrets/usr/bin/secrets
+sed -i 's|Exec=secrets|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas GI_TYPELIB_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/girepository-1.0 PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction'"$PYTHONDIR"'/site-packages secrets|' /tmp/secrets/usr/share/applications/*Secrets.desktop
 
 sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
 sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ com.github.johnfactotum.Foliate|' /tmp/foliate/usr/share/applications/*Foliate.desktop
@@ -74,10 +74,6 @@ sed -i 's|Icon=vscodium|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixm
 sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --enable-features=UseOzonePlatform --ozone-platform=wayland|g' /tmp/vscodium/usr/share/applications/codium*.desktop
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
-
-sed -i 's|Icon=de.haeckerfelix.Shortwave|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/icons/hicolor/scalable/apps/de.haeckerfelix.Shortwave.svg|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
-sed -i 's|Exec=shortwave|Exec=env GST_PLUGIN_PATH_1_0=/opt/3rd-party/bundles/clearfraction/usr/lib64/gstreamer-1.0 GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas shortwave|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
-sed -i 's|DBusActivatable=true|DBusActivatable=false|' /tmp/shortwave/usr/share/applications/*Shortwave.desktop
 
 
 # Add bundles to the mix
