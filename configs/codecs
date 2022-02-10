@@ -34,5 +34,6 @@ libplacebo-lib
 glslang-lib
 Vulkan-Loader-lib
 SPIRV-Tools-bin
+SPIRV-Cross-lib
 gsm-lib
 SVT-AV1-lib
