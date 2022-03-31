@@ -3,3 +3,4 @@ rofi-wayland-bin
 rofi-wayland-data
 kanshi
 wlsunset
+wlr-randr
