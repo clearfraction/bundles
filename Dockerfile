@@ -18,5 +18,6 @@ server { \n\
 && tac /tmp/urls | while read line; do curl --retry 3 -s -LO $line \
     && tar xf `basename $line` --strip-components=3 -C /tmp/update && rm -f `basename $line`; \
     done \
+&& curl --retry 3 -s https://raw.githubusercontent.com/clearfraction/clearfraction.github.io/main/media/favicon.ico -o /tmp/update/favicon.ico \    
 && mv /tmp/update /var/www/ && rm -rf /tmp/*
 CMD /usr/bin/sed -i 's/DEFAULT/'"$PORT"'/'  /etc/nginx/conf.d/mixer-server.conf && /usr/bin/nginx -g 'daemon off;'
