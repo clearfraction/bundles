@@ -68,7 +68,7 @@ sed -i 's|const.PKGDATADIR|"/opt/3rd-party/bundles/clearfraction/usr/share/secre
 sed -i 's|Exec=secrets|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas GI_TYPELIB_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/girepository-1.0 PYTHONPATH=$PYTHONPATH:/opt/3rd-party/bundles/clearfraction'"$PYTHONDIR"'/site-packages secrets|' /tmp/secrets/usr/share/applications/*Secrets.desktop
 
 sed -i '5s|/usr|/opt/3rd-party/bundles/clearfraction/usr|' /tmp/foliate/usr/bin/com.github.johnfactotum.Foliate
-sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ com.github.johnfactotum.Foliate|' /tmp/foliate/usr/share/applications/*Foliate.desktop
+sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ GI_TYPELIB_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/girepository-1.0 com.github.johnfactotum.Foliate|' /tmp/foliate/usr/share/applications/*Foliate.desktop
 
 sed -i 's|Icon=brave-browser|Icon=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/product_logo_128.png|' /tmp/brave/usr/share/applications/brave-browser.desktop
 sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/brave-browser --ozone-platform-hint=auto|g' /tmp/brave/usr/share/applications/brave-browser.desktop
