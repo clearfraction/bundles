@@ -27,10 +27,10 @@ LuaJIT-lib
 pulseaudio-lib
 libass
 dav1d-lib
-mpv
-mpv-bin
-mpv-data 
-mpv-lib
+mpv-cuda
+mpv-cuda-bin
+mpv-cuda-data 
+mpv-cuda-lib
 libplacebo-lib 
 glslang-lib
 Vulkan-Loader-lib
@@ -38,3 +38,6 @@ SPIRV-Tools-bin
 SPIRV-Cross-lib
 gsm-lib
 SVT-AV1-lib
+libvdpau
+nvidia-vaapi-driver
+vdpau-va-driver-vp9
