@@ -1,6 +1,5 @@
 ffmpeg-cuda 
 ffmpeg-cuda-libs
-nv-codec-headers
 libdrm-lib
 alsa-lib-lib
 SDL2-lib
