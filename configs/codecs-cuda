@@ -37,6 +37,6 @@ SPIRV-Tools-bin
 SPIRV-Cross-lib
 gsm-lib
 SVT-AV1-lib
-libvdpau
+libvdpau-lib
 nvidia-vaapi-driver
 vdpau-va-driver-vp9
