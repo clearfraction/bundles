@@ -37,3 +37,6 @@ SPIRV-Tools-bin
 SPIRV-Cross-lib
 gsm-lib
 SVT-AV1-lib
+libX11-lib
+libXScrnSaver-lib
+libXpresent-lib
