@@ -11,3 +11,6 @@ autotiling
 swaylock-effects
 wf-recorder
 grim
+playerctl
+playerctl-lib
+brightnessctl
