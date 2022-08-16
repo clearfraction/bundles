@@ -40,6 +40,7 @@ SVT-AV1-lib
 libX11-lib
 libXScrnSaver-lib
 libXpresent-lib
+libXv-lib
 libvdpau-lib
 nvidia-vaapi-driver
 vdpau-va-driver-vp9
