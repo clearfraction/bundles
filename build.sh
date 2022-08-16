@@ -78,6 +78,9 @@ sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfractio
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
 
+# Remove the brave symbolic link, not used. This resolves the broken symbolic link after installation.
+rm -f /tmp/brave/usr/bin/brave-browser-stable
+
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
 mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
