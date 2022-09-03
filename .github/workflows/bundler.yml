@@ -51,5 +51,6 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
         run: |
           mkdir dckr && mv Dockerfile dckr/ && cd dckr
+          heroku container:login
           heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
           rm -rf ~/.netrc
