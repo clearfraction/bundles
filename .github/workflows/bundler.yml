@@ -49,14 +49,10 @@ jobs:
           APP: "clearfraction"
           EMAIL: ${{ secrets.EMAIL }}
           API_KEY: ${{ secrets.API_KEY }}
-          DOCKER_OPTIONS: "--no-cache"
         run: |
-          echo ${API_KEY} | docker login \
-            --username=${EMAIL} \
-            registry.heroku.com \
-            --password-stdin
-          docker build \
-            ${DOCKER_OPTIONS} \
-            --tag registry.heroku.com/clearfraction/web .
-          heroku container:push web --app ${APP} && heroku container:release web --app ${APP}
+          mkdir dckr && mv Dockerfile dckr/ && cd dckr
+          heroku login && heroku container:login
+          docker build --tag registry.heroku.com/${APP}/web .
+          docker push registry.heroku.com/${APP}/web
+          heroku container:release web --app ${APP}
           rm -rf ~/.netrc /home/runner/.docker
