@@ -32,8 +32,7 @@ jobs:
     needs: mixer
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - run: curl -LO https://raw.githubusercontent.com/clearfraction/bundles/master/Dockerfile
       - name: Credentials
         env: 
           EMAIL: ${{ secrets.EMAIL }}
