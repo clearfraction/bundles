@@ -87,10 +87,14 @@ popd
 mixer bundle add `ls /mixer/local-bundles`
 mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
 
+# Format bump
+mixer build upstream-format --new-format 31
+export RELEASE=`cat mixversion`
+
 # Build the bundles and generate the update content
-mixer build all --min-version "$MINIMAL_RELEASE"
-mixer build delta-packs     --previous-versions 2
-mixer build delta-manifests --previous-versions 4
+# mixer build all --min-version "$MINIMAL_RELEASE"
+# mixer build delta-packs     --previous-versions 2
+# mixer build delta-manifests --previous-versions 4
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
