@@ -33,12 +33,10 @@ done
 # Create new mixer config
 # mkdir ~/mixer && cd $_
 # mixer init --no-default-bundles
-
 # Configure `builder.conf` to set the default bundle, CONTENTURL, and VERSIONURL
 # mixer config set Swupd.BUNDLE "os-core"
 # mixer config set Swupd.CONTENTURL "https://clearfraction.herokuapp.com/update"
 # mixer config set Swupd.VERSIONURL "https://clearfraction.herokuapp.com/update"
-
 # Create an empty local os-core bundle. `swupd` client expects the os-core bundle to exist in a mix even if it’s empty.
 # rm -rf /mixer/mixbundles /mixer/local-bundles/*
 # mixer bundle create os-core --local
@@ -88,6 +86,9 @@ mixer bundle add `ls /mixer/local-bundles`
 # mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
 
 # Format bump
+# do not run `mixer versions update`, `build upstream-format` will handle it
+# also commend `mixer build all`, `mixer build delta-packs`, `mixer build delta-manifests`
+# two releases will be generated: +10 and +20, keep the latter in `!($RELEASE|version|xxxxx)`
 mixer build upstream-format --new-format 31
 export RELEASE=`cat mixversion`
 
@@ -98,8 +99,8 @@ export RELEASE=`cat mixversion`
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
-rm -rf /mixer/update/www/!($RELEASE|version)
-rm -rf /mixer/update/image/!($RELEASE|LAST_VER)
+rm -rf /mixer/update/www/!($RELEASE|version|36180)
+rm -rf /mixer/update/image/!($RELEASE|LAST_VER|36180)
 
 mv /mixer/update/www/* /tmp/repo/update 2>&1 1>/dev/null
 mv /mixer/update/image /tmp/repo/ 2>&1 1>/dev/null
@@ -111,7 +112,7 @@ mv /home/artifact /home/packages && tar cf /home/packages-$RELEASE.tar /home/pac
 # Deploy to GH releases
 cd /home
 hub release create -m v$RELEASE $RELEASE || { echo "Fatal: tag already exists"; exit 1; }
-for i in {1..5}; do 
+for i in {1..10}; do 
   hub release edit $RELEASE -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
   sleep 100
 done
