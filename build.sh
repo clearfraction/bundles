@@ -85,7 +85,7 @@ popd
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
-mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
+# mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
 
 # Format bump
 mixer build upstream-format --new-format 31
