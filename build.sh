@@ -45,7 +45,7 @@ done
 
 # Extract packages and manage content
 git clone --quiet https://github.com/clearfraction/bundles.git
-mv bundles/* /home
+mv bundles/.git* /home && mv bundles/* /home
 shopt -s extglob
 rm -rf /mixer/mixbundles /mixer/local-bundles/!(os-core)
 echo os-core > /mixer/mixbundles
@@ -84,7 +84,7 @@ popd
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
-mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
+mixer versions update --mix-version $RELEASE --upstream-version $RELEASE --skip-format-check
 
 # Format bump
 # do not run `mixer versions update`, `build upstream-format` will handle it
@@ -100,8 +100,8 @@ mixer build delta-manifests --previous-versions 4
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
-rm -rf /mixer/update/www/!($RELEASE|version|36180)
-rm -rf /mixer/update/image/!($RELEASE|LAST_VER|36180)
+rm -rf /mixer/update/www/!($RELEASE|version)
+rm -rf /mixer/update/image/!($RELEASE|LAST_VER)
 
 mv /mixer/update/www/* /tmp/repo/update 2>&1 1>/dev/null
 mv /mixer/update/image /tmp/repo/ 2>&1 1>/dev/null
