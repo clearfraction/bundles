@@ -94,7 +94,7 @@ mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
 # export RELEASE=`cat mixversion`
 
 # Build the bundles and generate the update content
-mixer build all --min-version "$MINIMAL_RELEASE"
+mixer build all --min-version "$MINIMAL_RELEASE" --skip-format-check
 mixer build delta-packs     --previous-versions 2
 mixer build delta-manifests --previous-versions 4
 
