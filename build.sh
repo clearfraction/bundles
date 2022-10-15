@@ -21,6 +21,7 @@ export MINIMAL_RELEASE=`tail -1 /tmp/urls | cut -d '/' -f 8`
 # Import mixer config
 curl --retry 3 -s -L https://github.com/clearfraction/bundles/releases/download/"$LAST_RELEASE"/mixer-"$LAST_RELEASE".tar -o /tmp/mixer.tar || { echo "Failed to download mixer state"; exit 1; }
 tar xf /tmp/mixer.tar -C / && rm -rf /tmp/mixer.tar && cd /mixer
+rm -rf bundles
 
 # Import old releases to mixer
 mkdir -p /mixer/update/{www,image}
@@ -83,7 +84,7 @@ popd
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
-mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
+mixer versions update --mix-version $RELEASE --upstream-version $RELEASE # --skip-format-check
 
 # Format bump
 # do not run `mixer versions update`, `build upstream-format` will handle it
@@ -93,14 +94,14 @@ mixer versions update --mix-version $RELEASE --upstream-version $RELEASE
 # export RELEASE=`cat mixversion`
 
 # Build the bundles and generate the update content
-mixer build all --min-version "$MINIMAL_RELEASE"
+mixer build all --min-version "$MINIMAL_RELEASE" # --skip-format-check
 mixer build delta-packs     --previous-versions 2
 mixer build delta-manifests --previous-versions 4
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
-rm -rf /mixer/update/www/!($RELEASE|version|36180)
-rm -rf /mixer/update/image/!($RELEASE|LAST_VER|36180)
+rm -rf /mixer/update/www/!($RELEASE|version)
+rm -rf /mixer/update/image/!($RELEASE|LAST_VER)
 
 mv /mixer/update/www/* /tmp/repo/update 2>&1 1>/dev/null
 mv /mixer/update/image /tmp/repo/ 2>&1 1>/dev/null
