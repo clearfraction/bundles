@@ -21,6 +21,7 @@ export MINIMAL_RELEASE=`tail -1 /tmp/urls | cut -d '/' -f 8`
 # Import mixer config
 curl --retry 3 -s -L https://github.com/clearfraction/bundles/releases/download/"$LAST_RELEASE"/mixer-"$LAST_RELEASE".tar -o /tmp/mixer.tar || { echo "Failed to download mixer state"; exit 1; }
 tar xf /tmp/mixer.tar -C / && rm -rf /tmp/mixer.tar && cd /mixer
+rm -rf bundles
 
 # Import old releases to mixer
 mkdir -p /mixer/update/{www,image}
@@ -44,7 +45,7 @@ done
 
 # Extract packages and manage content
 git clone --quiet https://github.com/clearfraction/bundles.git
-mv bundles/.git* /home && mv bundles/* /home
+mv bundles/* /home
 shopt -s extglob
 rm -rf /mixer/mixbundles /mixer/local-bundles/!(os-core)
 echo os-core > /mixer/mixbundles
