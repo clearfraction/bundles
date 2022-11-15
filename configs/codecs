@@ -15,6 +15,7 @@ speex-lib
 libvorbis-lib
 numactl-lib
 pulseaudio-lib
+pipewire-lib
 jack2-lib
 gstreamer1-libav
 x264-libs 
