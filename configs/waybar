@@ -6,4 +6,3 @@ compat-libsigc++-soname20-lib
 compat-pangomm-soname14-lib
 gtkmm3-lib
 libdbusmenu-lib
-spdlog-lib
