@@ -46,12 +46,6 @@ jobs:
       - name: CD
         env:
           APP: "clearfraction"
-          EMAIL: ${{ secrets.EMAIL }}
-          API_KEY: ${{ secrets.API_KEY }}
+          VERCEL_REBUILD_HOOK: ${{ secrets.VERCEL_REBUILD_HOOK }}
         run: |
-          mkdir dckr && mv Dockerfile dckr/ && cd dckr
-          heroku login && heroku container:login
-          docker build --tag registry.heroku.com/${APP}/web .
-          docker push registry.heroku.com/${APP}/web
-          heroku container:release web --app ${APP}
-          rm -rf ~/.netrc /home/runner/.docker
+          curl -X POST ${VERCEL_REBUILD_HOOK}
