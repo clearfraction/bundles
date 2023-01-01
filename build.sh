@@ -61,6 +61,9 @@ popd
 # Wipe AVX* content
 rm -rf /tmp/*/usr/share/clear/optimized-elf
 
+# Python cleanup
+find /tmp -type d -name *.dist-info -delete 
+
 # Fix execs
 export PYTHONDIR=`echo /usr/lib/python*`
 sed -i 's|const.PKGDATADIR|"/opt/3rd-party/bundles/clearfraction/usr/share/secrets"|g' /tmp/secrets/usr/bin/secrets
