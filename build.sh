@@ -60,9 +60,10 @@ popd
 
 # Wipe AVX* content
 rm -rf /tmp/*/usr/share/clear/optimized-elf
+find /tmp -depth -type d -name x86-64-v4 -exec rm -rf '{}' \;
 
 # Python cleanup
-find /tmp -type d -name *.dist-info -delete 
+find /tmp -depth -type d -name *.dist-info -exec rm -rf '{}' \; 
 
 # Fix execs
 export PYTHONDIR=`echo /usr/lib/python*`
