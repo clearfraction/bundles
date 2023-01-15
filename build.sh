@@ -81,9 +81,14 @@ sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfractio
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
 
-# Fix the brave symbolic link
+# Fix Brave symbolic link
 pushd /tmp/brave/usr/bin
 ln -sf ../../opt/brave.com/brave/brave-browser brave-browser-stable
+popd
+
+# Fix VSCodium symbolic link
+pushd /tmp/vscodium/usr/bin
+ln -sf ../../usr/share/codium/bin/codium codium
 popd
 
 # Add bundles to the mix
