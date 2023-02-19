@@ -91,6 +91,10 @@ pushd /tmp/vscodium/usr/bin
 ln -sf ../../usr/share/codium/bin/codium codium
 popd
 
+# Fix webapp-manager paths
+sed -i "s|/usr/lib|env PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/webapp-manager GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas GI_TYPELIB_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/girepository-1.0 LD_LIBRARY_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/:$LD_LIBRARY_PATH /opt/3rd-party/bundles/clearfraction/usr/lib|" /tmp/webapp-manager/usr/bin/webapp-manager
+sed -i "s|/usr/share|/opt/3rd-party/bundles/clearfraction/usr/share|g" /tmp/webapp-manager/usr/lib/webapp-manager/webapp-manager.py
+
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
 mixer versions update --mix-version $RELEASE --upstream-version $RELEASE # --skip-format-check
