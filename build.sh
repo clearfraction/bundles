@@ -81,6 +81,9 @@ sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfractio
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
 
+sed -i 's|Exec=qt6ct|Exec=env QT_QPA_PLATFORMTHEME=qt6ct QT_PLUGIN_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/qt5/plugins/ LD_LIBRARY_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/:\$LD_LIBRARY_PATH /opt/3rd-party/bundles/clearfraction/usr/bin/qt6ct|' /tmp/qt6ct/usr/share/applications/qt6ct.desktop
+
+
 # Fix Brave symbolic link
 pushd /tmp/brave/usr/bin
 ln -sf ../../opt/brave.com/brave/brave-browser brave-browser-stable
