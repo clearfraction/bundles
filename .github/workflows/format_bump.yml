@@ -1,0 +1,53 @@
+name: bundler
+on:
+  shedule:
+    -cron: '0 22 * * 4'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [build]
+    
+jobs:
+  mixer:
+    runs-on: ubuntu-latest
+    container: 
+      image: clearlinux:latest
+      options: --privileged --cap-add=SYS_ADMIN
+    steps:
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          repo: clearfraction/mass-rebuild
+          workflow: mass-rebuild.yml
+          check_artifacts: true
+          path: /home
+      - name: Build new release
+        shell: bash
+        run: |
+          swupd bundle-add curl --quiet
+          cd /home && curl -s -LO https://raw.githubusercontent.com/clearfraction/bundles/master/format_bump.sh && chmod +x format_bump.sh
+          ./format_bump.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: paulcarroty
+      
+  docker:
+    needs: mixer
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -LO https://raw.githubusercontent.com/clearfraction/bundles/master/Dockerfile
+      - name: Credentials
+        env: 
+          EMAIL: ${{ secrets.EMAIL }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          cat > ~/.netrc <<EOF
+            machine api.heroku.com
+              login $EMAIL
+              password $API_KEY
+          EOF
+      - name: CD
+        env:
+          APP: "clearfraction"
+          VERCEL_REBUILD_HOOK: ${{ secrets.VERCEL_REBUILD_HOOK }}
+        run: |
+          curl -X POST ${VERCEL_REBUILD_HOOK}
