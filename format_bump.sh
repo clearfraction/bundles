@@ -3,7 +3,7 @@ export CLR_FORMAT=$(curl --retry 3 https://download.clearlinux.org/update/$(curl
 export CF_FORMAT=$(curl --retry 3 https://download.clearfraction.cf/update/$(curl --retry 3 https://download.clearfraction.cf/update/version/latest_version)/format) 
 if [ "$CF_FORMAT" -eq "$CLR_FORMAT" ]; then
    echo "No format bump needed"
-   exit 0
+   exit 1
 else 
    echo "Format bump needed"
 fi
