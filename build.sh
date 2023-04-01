@@ -1,6 +1,17 @@
 #!/bin/bash
 # docs - https://docs.01.org/clearlinux/latest/guides/clear/swupd-3rd-party.html
 
+# Format bump detection
+export CLR_FORMAT=$(curl --retry 3 https://download.clearlinux.org/update/$(curl --retry 3 https://download.clearlinux.org/latest)/format)
+export CF_FORMAT=$(curl --retry 3 https://download.clearfraction.cf/update/$(curl --retry 3 https://download.clearfraction.cf/update/version/latest_version)/format) 
+if [ "$CF_FORMAT" -eq "$CLR_FORMAT" ]; then
+   echo "No format bump needed"
+else 
+   echo "Format bump needed"
+   exit 1
+fi
+
+
 # Install the mixer tool and create workspace
 swupd update --quiet
 swupd bundle-add mixer package-utils git --quiet 
@@ -100,7 +111,7 @@ sed -i "s|/usr/share|/opt/3rd-party/bundles/clearfraction/usr/share|g" /tmp/weba
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
-mixer versions update --mix-version $RELEASE --upstream-version $RELEASE # --skip-format-check
+mixer versions update --mix-version $RELEASE --upstream-version $RELEASE --skip-format-check
 
 # Format bump
 # do not run `mixer versions update`, `build upstream-format` will handle it
@@ -110,7 +121,7 @@ mixer versions update --mix-version $RELEASE --upstream-version $RELEASE # --ski
 # export RELEASE=`cat mixversion`
 
 # Build the bundles and generate the update content
-mixer build all --min-version "$MINIMAL_RELEASE" # --skip-format-check
+mixer build all --min-version "$MINIMAL_RELEASE" --skip-format-check
 mixer build delta-packs     --previous-versions 2
 mixer build delta-manifests --previous-versions 4
 
