@@ -130,3 +130,6 @@ for i in {1..10}; do
 done
 
 done
+
+# Trigger the endpoint rebuild
+curl -X POST ${VERCEL_REBUILD_HOOK}
