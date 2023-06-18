@@ -72,6 +72,8 @@ do
     [ -d /tmp/"$bundle"/V3/usr/lib64 ] && mv /tmp/"$bundle"/V3/usr/lib64/* /tmp/"$bundle"/usr/lib64/ 
     [ -d /tmp/"$bundle"/V3/usr/lib32 ] && mv /tmp/"$bundle"/V3/usr/lib32/* /tmp/"$bundle"/usr/lib32/ 
     [ -d /tmp/"$bundle"/V3/usr/libexec ] && mv /tmp/"$bundle"/V3/usr/libexec/* /tmp/"$bundle"/usr/libexec/
+    [ -d /tmp/"$bundle"/V3 ] && rm -rf /tmp/"$bundle"/V3
+
 done
 popd
 
