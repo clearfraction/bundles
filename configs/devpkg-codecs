@@ -1,6 +1,6 @@
 ffmpeg-dev
 x264-dev 
 x265-dev
-libmp3lame0-dev
+libmp3lame-dev
 fdk-aac-dev
 mpv-dev
