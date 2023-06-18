@@ -68,10 +68,10 @@ do
     for rpm in /tmp/"$bundle"/*.rpm; do rpm2cpio "$rpm" | cpio -D /tmp/"$bundle" -idm && rm -rf "$rpm"; done
     # handle AVX binaries
     [ -d /tmp/"$bundle"/V4 ] && rm -rf /tmp/"$bundle"/V4
-    [ -d /tmp/"$bundle"/V3/usr/bin ] && mv /tmp/"$bundle"/V3/usr/bin/* /tmp/"$bundle"/usr/bin/
-    [ -d /tmp/"$bundle"/V3/usr/lib64 ] && mv /tmp/"$bundle"/V3/usr/lib64/* /tmp/"$bundle"/usr/lib64/ 
-    [ -d /tmp/"$bundle"/V3/usr/lib32 ] && mv /tmp/"$bundle"/V3/usr/lib32/* /tmp/"$bundle"/usr/lib32/ 
-    [ -d /tmp/"$bundle"/V3/usr/libexec ] && mv /tmp/"$bundle"/V3/usr/libexec/* /tmp/"$bundle"/usr/libexec/
+    [ -d /tmp/"$bundle"/V3/usr/bin ] && cp -Rf /tmp/"$bundle"/V3/usr/bin/* /tmp/"$bundle"/usr/bin/
+    [ -d /tmp/"$bundle"/V3/usr/lib64 ] && cp -Rf /tmp/"$bundle"/V3/usr/lib64/* /tmp/"$bundle"/usr/lib64/ 
+    [ -d /tmp/"$bundle"/V3/usr/lib32 ] && cp -Rf /tmp/"$bundle"/V3/usr/lib32/* /tmp/"$bundle"/usr/lib32/ 
+    [ -d /tmp/"$bundle"/V3/usr/libexec ] && cp -Rf /tmp/"$bundle"/V3/usr/libexec/* /tmp/"$bundle"/usr/libexec/
     [ -d /tmp/"$bundle"/V3 ] && rm -rf /tmp/"$bundle"/V3
 
 done
