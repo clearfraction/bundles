@@ -45,3 +45,4 @@ libXv-lib
 libvdpau-lib
 nvidia-vaapi-driver
 vdpau-va-driver-vp9
+libunwind-lib
