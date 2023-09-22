@@ -46,3 +46,16 @@ libvdpau-lib
 nvidia-vaapi-driver
 vdpau-va-driver-vp9
 libunwind-lib
+zimg-lib
+xvidcore-lib
+vid.stab-lib
+libtheora-lib
+libssh-lib
+libssh2-lib
+srt-lib
+speex-lib
+librsvg-lib
+libopenmpt-lib
+openjpeg-lib
+libaom-lib
+ladspa_sdk-lib
