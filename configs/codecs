@@ -55,3 +55,9 @@ libopenmpt-lib
 openjpeg-lib
 libaom-lib
 ladspa_sdk-lib
+libunibreak-lib
+mesa-lib
+gnutls-lib
+libsamplerate-lib
+v4l-utils-lib
+libXv-lib
