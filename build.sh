@@ -62,7 +62,7 @@ rm -rf /mixer/mixbundles /mixer/local-bundles/!(os-core)
 echo os-core > /mixer/mixbundles
 pushd /home/configs
 for bundle in *
-do
+ do
     dnf download --destdir=/tmp/"$bundle" `cat $bundle` || { echo "Failed to download $bundle content"; exit 1; }
     echo "content(/tmp/$bundle)" >> /mixer/local-bundles/$bundle
     for rpm in /tmp/"$bundle"/*.rpm; do rpm2cpio "$rpm" | cpio -D /tmp/"$bundle" -idm && rm -rf "$rpm"; done
@@ -73,8 +73,10 @@ do
     [ -d /tmp/"$bundle"/V3/usr/lib32 ] && cp -Rf /tmp/"$bundle"/V3/usr/lib32/* /tmp/"$bundle"/usr/lib32/ 
     [ -d /tmp/"$bundle"/V3/usr/libexec ] && cp -Rf /tmp/"$bundle"/V3/usr/libexec/* /tmp/"$bundle"/usr/libexec/
     [ -d /tmp/"$bundle"/V3 ] && rm -rf /tmp/"$bundle"/V3
-
-done
+    
+    #fix pkgconfig
+    [ -d /tmp/"$bundle"/usr/lib64/pkgconfig ] && sed -i 's|/usr|/opt/3rd-party/bundles/clearfraction/usr|g' /tmp/"$bundle"/usr/lib64/pkgconfig/*.pc
+ done
 popd
 
 # Wipe legacy AVX* content
