@@ -36,7 +36,7 @@ jobs:
           context: .
           file: ./Dockerfile-ffmpeg
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: clearfraction/ffmpeg:latest
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push ffmpeg-cuda Docker image
@@ -45,5 +45,5 @@ jobs:
           context: .
           file: ./Dockerfile-ffmpeg-cuda
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: clearfraction/ffmpeg-cuda:latest
           labels: ${{ steps.meta.outputs.labels }}
