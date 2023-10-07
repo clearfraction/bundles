@@ -3,7 +3,7 @@ name: Publish Docker image
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [build]
+    types: [build_docker]
   release:
     types: [published]
 
