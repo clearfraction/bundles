@@ -11,6 +11,7 @@ jobs:
       image: clearlinux:latest
       options: --privileged --cap-add=SYS_ADMIN
     steps:
+      - run: rm -rf /opt
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2
         with:
