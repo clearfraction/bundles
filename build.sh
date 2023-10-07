@@ -76,6 +76,9 @@ for bundle in *
     
     #fix pkgconfig
     [ -d /tmp/"$bundle"/usr/lib64/pkgconfig ] && sed -i 's|/usr|/opt/3rd-party/bundles/clearfraction/usr|g' /tmp/"$bundle"/usr/lib64/pkgconfig/*.pc
+
+    # move all libs to lib64
+    find /tmp/"$bundle"/usr/lib64 -type f -print -exec mv {} /tmp/"$bundle"/usr/lib64/ \;
  done
 popd
 
