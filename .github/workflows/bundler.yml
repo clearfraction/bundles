@@ -5,15 +5,12 @@ on:
     types: [build]
     
 jobs:
-  cleanup:
-    runs-on: ubuntu-latest
-    steps:
-      - run: sudo rm -rf /opt; sudo docker system prune -all
-      
   mixer:
     runs-on: ubuntu-latest
     container: 
       image: clearlinux:latest
+      volumes:
+        - /opt:/opt
       options: --privileged --cap-add=SYS_ADMIN
     steps:
       - name: Download artifact
@@ -26,6 +23,7 @@ jobs:
       - name: Build new release
         shell: bash
         run: |
+          rm -rf /opt/*
           swupd bundle-add curl --quiet
           cd /home && curl -s -LO https://github.com/clearfraction/bundles/raw/master/build.sh && chmod +x build.sh
           ./build.sh
