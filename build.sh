@@ -128,8 +128,8 @@ mixer versions update --mix-version $RELEASE --upstream-version $RELEASE --skip-
 
 # Build the bundles and generate the update content
 mixer build all --min-version "$MINIMAL_RELEASE" --skip-format-check
-mixer build delta-packs     --previous-versions 2
-mixer build delta-manifests --previous-versions 4
+# mixer build delta-packs     --previous-versions 2
+# mixer build delta-manifests --previous-versions 4
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
