@@ -5,13 +5,17 @@ on:
     types: [build]
     
 jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo rm -rf /opt; sudo docker system prune -all
+      
   mixer:
     runs-on: ubuntu-latest
     container: 
       image: clearlinux:latest
       options: --privileged --cap-add=SYS_ADMIN
     steps:
-      - run: rm -rf /opt
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v2
         with:
