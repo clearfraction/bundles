@@ -10,6 +10,7 @@ else
    echo "Format bump needed"
    exit 1
 fi
+df -h
 
 
 # Install the mixer tool and create workspace
@@ -41,6 +42,7 @@ tac /tmp/urls | while read url; do
     image=`echo $url | sed 's/repo/image/' | sed 's/.tar/.tar.zst/'`
     curl --fail --retry 3 -s -LO "$image" && tar xf `basename $image` --strip-components=3 -C /mixer/update/image/ && rm -rf `basename $image`   
 done
+df -h
 
 # Create new mixer config
 # mkdir ~/mixer && cd $_
@@ -78,6 +80,7 @@ for bundle in *
     [ -d /tmp/"$bundle"/usr/lib64/pkgconfig ] && sed -i 's|/usr|/opt/3rd-party/bundles/clearfraction/usr|g' /tmp/"$bundle"/usr/lib64/pkgconfig/*.pc
  done
 popd
+df -h
 
 # Wipe legacy AVX* content
 rm -rf /tmp/*/usr/share/clear/optimized-elf
@@ -126,6 +129,7 @@ mixer versions update --mix-version $RELEASE --upstream-version $RELEASE --skip-
 # mixer build upstream-format --new-format 31
 # export RELEASE=`cat mixversion`
 
+df -h
 # Build the bundles and generate the update content
 mixer build all --min-version "$MINIMAL_RELEASE" --skip-format-check
 # mixer build delta-packs     --previous-versions 2
