@@ -76,6 +76,9 @@ for bundle in *
     
     #fix pkgconfig
     [ -d /tmp/"$bundle"/usr/lib64/pkgconfig ] && sed -i 's|/usr|/opt/3rd-party/bundles/clearfraction/usr|g' /tmp/"$bundle"/usr/lib64/pkgconfig/*.pc
+
+    #fix keyd.service path
+    [ -d /tmp/"$bundle"/usr/lib/systemd/user ] && sed -i 's|/usr/bin|/opt/3rd-party/bin|g /tmp/"$bundle"/usr/lib/systemd/user/*.service
  done
 popd
 
