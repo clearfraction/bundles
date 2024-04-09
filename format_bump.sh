@@ -8,7 +8,8 @@ else
    echo "Format bump needed"
 fi
 # swupd update --quiet
-swupd bundle-add mixer package-utils git rsync --quiet 
+swupd bundle-add mixer package-utils git rsync --quiet
+swupd 3rd-party add clearfraction https://clearfraction.vercel.app/update -F "$CF_FORMAT" -y
 
 curl --retry 3 -s https://api.github.com/repos/clearfraction/bundles/releases \
       | grep browser_download_url  | grep 'repo' \
@@ -40,7 +41,7 @@ echo os-core > /mixer/mixbundles
 pushd /home/configs
 for bundle in *
 do  
-    swupd 3rd-party bundle-add "$bundle" -F "$CF_FORMAT"
+    swupd 3rd-party bundle-add "$bundle" -F "$CF_FORMAT" || { echo "Failed to install $bundle"; exit 1; }
     rsync -avz --exclude={'/usr/share/clear','/usr/share/defaults/swupd','/usr/lib/os-release'} /opt/3rd-party/bundles/clearfraction/* /tmp/"$bundle"/
     swupd 3rd-party bundle-remove "$bundle" -F "$CF_FORMAT"
     #dnf download --destdir=/tmp/"$bundle" `cat $bundle` || { echo "Failed to download $bundle content"; exit 1; }
