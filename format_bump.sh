@@ -7,8 +7,8 @@ if [ "$CF_FORMAT" -eq "$CLR_FORMAT" ]; then
 else 
    echo "Format bump needed"
 fi
-swupd update --quiet
-swupd bundle-add mixer package-utils git --quiet 
+# swupd update --quiet
+swupd bundle-add mixer package-utils git rsync --quiet 
 
 curl --retry 3 -s https://api.github.com/repos/clearfraction/bundles/releases \
       | grep browser_download_url  | grep 'repo' \
