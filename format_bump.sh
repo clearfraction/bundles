@@ -41,7 +41,7 @@ echo os-core > /mixer/mixbundles
 pushd /home/configs
 for bundle in *
 do  
-    swupd 3rd-party bundle-add "$bundle" -F "$CF_FORMAT" || { echo "Failed to install $bundle"; exit 1; }
+    swupd 3rd-party bundle-add "$bundle" -F "$CF_FORMAT" -y || { echo "Failed to install $bundle"; exit 1; }
     rsync -avz --exclude={'/usr/share/clear','/usr/share/defaults/swupd','/usr/lib/os-release'} /opt/3rd-party/bundles/clearfraction/* /tmp/"$bundle"/
     swupd 3rd-party bundle-remove "$bundle" -F "$CF_FORMAT"
     #dnf download --destdir=/tmp/"$bundle" `cat $bundle` || { echo "Failed to download $bundle content"; exit 1; }
