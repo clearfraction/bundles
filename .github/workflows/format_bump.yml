@@ -13,13 +13,6 @@ jobs:
       image: clearlinux:latest
       options: --privileged --cap-add=SYS_ADMIN
     steps:
-      - name: Download artifact
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          repo: clearfraction/mass-rebuild
-          workflow: mass-rebuild.yml
-          check_artifacts: true
-          path: /home
       - name: Build new release
         shell: bash
         run: |
