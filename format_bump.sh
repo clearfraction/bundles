@@ -1,6 +1,6 @@
 #!/bin/bash
 export CLR_FORMAT=$(curl --retry 3 https://download.clearlinux.org/update/$(curl --retry 3 https://download.clearlinux.org/latest)/format)
-export CF_FORMAT=$(curl --retry 3 https://download.clearfraction.cf/update/$(curl --retry 3 https://download.clearfraction.cf/update/version/latest_version)/format) 
+export CF_FORMAT=$(curl --retry 3 https://clearfraction.vercel.app/update/$(curl --retry 3 https://clearfraction.vercel.app/update/version/latest_version)/format) 
 if [ "$CF_FORMAT" -eq "$CLR_FORMAT" ]; then
    echo "No format bump needed"
    exit 0
@@ -9,11 +9,6 @@ else
 fi
 swupd update --quiet
 swupd bundle-add mixer package-utils git --quiet 
-shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
-createrepo_c -q /home/artifact
-dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
-                   --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64 \
-                   --add-repo file:///home/artifact
 
 curl --retry 3 -s https://api.github.com/repos/clearfraction/bundles/releases \
       | grep browser_download_url  | grep 'repo' \
@@ -44,10 +39,13 @@ rm -rf /mixer/mixbundles /mixer/local-bundles/!(os-core);
 echo os-core > /mixer/mixbundles
 pushd /home/configs
 for bundle in *
-do
-    dnf download --destdir=/tmp/"$bundle" `cat $bundle` || { echo "Failed to download $bundle content"; exit 1; }
+do  
+    swupd 3rd-party bundle-add "$bundle" -F "$CF_FORMAT"
+    rsync -avz --exclude={'/usr/share/clear','/usr/share/defaults/swupd','/usr/lib/os-release'} /opt/3rd-party/bundles/clearfraction/* /tmp/"$bundle"/
+    swupd 3rd-party bundle-remove "$bundle" -F "$CF_FORMAT"
+    #dnf download --destdir=/tmp/"$bundle" `cat $bundle` || { echo "Failed to download $bundle content"; exit 1; }
     echo "content(/tmp/$bundle)" >> /mixer/local-bundles/$bundle
-    for rpm in /tmp/"$bundle"/*.rpm; do rpm2cpio "$rpm" | cpio -D /tmp/"$bundle" -idm && rm -rf "$rpm"; done
+    #for rpm in /tmp/"$bundle"/*.rpm; do rpm2cpio "$rpm" | cpio -D /tmp/"$bundle" -idm && rm -rf "$rpm"; done
     # handle AVX binaries
     [ -d /tmp/"$bundle"/V4 ] && rm -rf /tmp/"$bundle"/V4
     [ -d /tmp/"$bundle"/V3/usr/bin ] && mv /tmp/"$bundle"/V3/usr/bin/* /tmp/"$bundle"/usr/bin/
