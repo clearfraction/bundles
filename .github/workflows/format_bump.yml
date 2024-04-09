@@ -11,18 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: clearlinux:latest
+      volumes:
+        - /opt:/opt
       options: --privileged --cap-add=SYS_ADMIN
     steps:
-      - name: Download artifact
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          repo: clearfraction/mass-rebuild
-          workflow: mass-rebuild.yml
-          check_artifacts: true
-          path: /home
       - name: Build new release
         shell: bash
         run: |
+          rm -rf /opt/*
           swupd bundle-add curl --quiet
           cd /home && curl -s -LO https://raw.githubusercontent.com/clearfraction/bundles/master/format_bump.sh && chmod +x format_bump.sh
           ./format_bump.sh
