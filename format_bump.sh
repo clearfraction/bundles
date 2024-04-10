@@ -51,7 +51,7 @@ mixer bundle add `ls /mixer/local-bundles`
 # export RELEASE=`cat mixversion`
 
 # Build the bundles and generate the update content
-mixer versions update
+mixer versions update --mix-version "$RELEASE" --upstream-version "$RELEASE"
 mixer build upstream-format --new-format "$CLR_FORMAT"
 
 
