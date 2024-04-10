@@ -69,7 +69,7 @@ mixer bundle add `ls /mixer/local-bundles`
 
 # Build the bundles and generate the update content
 mixer versions update --upstream-version "$RELEASE"
-mixer build upstream-format --new-format "$CLR_FORMAT"
+mixer build upstream-format
 
 
 # Generate artifacts
