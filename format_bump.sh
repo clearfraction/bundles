@@ -7,7 +7,7 @@ if [ "$CF_FORMAT" -eq "$CLR_FORMAT" ]; then
 else 
    echo "Format bump needed"
 fi
-# swupd update --quiet
+swupd update --quiet --retry-delay=1
 swupd bundle-add mixer package-utils git rsync --quiet
 swupd 3rd-party add clearfraction https://clearfraction.vercel.app/update -F "$CF_FORMAT" -y
 
@@ -51,7 +51,7 @@ mixer bundle add `ls /mixer/local-bundles`
 # export RELEASE=`cat mixversion`
 
 # Build the bundles and generate the update content
-mixer versions update --mix-version "$RELEASE" --upstream-version "$RELEASE"
+mixer versions update --upstream-version "$RELEASE"
 mixer build upstream-format --new-format "$CLR_FORMAT"
 
 
