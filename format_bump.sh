@@ -35,7 +35,7 @@ done
 # Extract packages and manage content
 git clone --quiet https://github.com/clearfraction/bundles.git
 mv bundles/.git* /home && mv bundles/* /home
-shopt -s extglob;
+shopt -s extglob
 rm -rf /mixer/mixbundles /mixer/local-bundles/!(os-core);
 echo os-core > /mixer/mixbundles
 pushd /home/configs
@@ -75,7 +75,9 @@ mixer build upstream-format
 mkdir -p /tmp/repo/update
 shopt -s extglob
 rm -rf /mixer/update/www/!($((LAST_RELEASE+10))|$((LAST_RELEASE+20))|version)
+ls -l /mixer/update/www/
 rm -rf /mixer/update/image/!($((LAST_RELEASE+10))|$((LAST_RELEASE+20))|LAST_VER)
+ls -l /mixer/update/image/
 
 mv /mixer/update/www/* /tmp/repo/update 2>&1 1>/dev/null
 mv /mixer/update/image /tmp/repo/ 2>&1 1>/dev/null
