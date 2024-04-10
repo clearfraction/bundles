@@ -73,6 +73,7 @@ mixer build upstream-format
 
 # Generate artifacts
 mkdir -p /tmp/repo/update
+shopt -s extglob
 rm -rf /mixer/update/www/!($((LAST_RELEASE+10))|$((LAST_RELEASE+20))|version)
 rm -rf /mixer/update/image/!($((LAST_RELEASE+10))|$((LAST_RELEASE+20))|LAST_VER)
 
