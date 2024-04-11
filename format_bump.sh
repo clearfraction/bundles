@@ -58,7 +58,6 @@ mixer bundle add `ls /mixer/local-bundles`
 # also commend `mixer build all`, `mixer build delta-packs`, `mixer build delta-manifests`
 # two releases will be generated: +10 and +20, keep the latter in `!($RELEASE|version|xxxxx)`
 # mixer build upstream-format --new-format 31
-# export RELEASE=`cat mixversion`
 
 # Build the bundles and generate the update content
 mixer build upstream-format
@@ -77,12 +76,12 @@ tar --zstd -cf /home/image-$RELEASE.tar.zst /tmp/repo/image
 tar cf /home/packages-$RELEASE.tar /home/packages
 
 # Deploy to GH releases
-#cd /home
-#hub release create -m v$RELEASE $RELEASE || { echo "Fatal: tag already exists"; exit 1; }
-#for i in {1..10}; do 
-#  hub release edit $RELEASE -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
-#  sleep 100
-#done
+cd /home
+hub release create -m v$RELEASE $RELEASE || { echo "Fatal: tag already exists"; exit 1; }
+for i in {1..10}; do 
+  hub release edit $RELEASE -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
+  sleep 100
+done
 
 done
 echo "Artifacts:"
@@ -90,4 +89,4 @@ du -ch /home/*tar*
 
 
 # Trigger the endpoint rebuild
-#curl -X POST ${VERCEL_REBUILD_HOOK}
+curl -X POST ${VERCEL_REBUILD_HOOK}
