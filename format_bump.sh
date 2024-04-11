@@ -7,6 +7,7 @@ if [ "$CF_FORMAT" -eq "$CLR_FORMAT" ]; then
 else 
    echo "Format bump needed"
 fi
+
 swupd update --quiet --retry-delay=1
 swupd bundle-add mixer package-utils git rsync --quiet
 swupd 3rd-party add clearfraction https://clearfraction.vercel.app/update -F "$CF_FORMAT" -y
@@ -38,22 +39,14 @@ mv bundles/.git* /home && mv bundles/* /home
 shopt -s extglob
 rm -rf /mixer/mixbundles /mixer/local-bundles/!(os-core);
 echo os-core > /mixer/mixbundles
+
 pushd /home/configs
 for bundle in *
 do  
     swupd 3rd-party bundle-add "$bundle" -F "$CF_FORMAT" -y || { echo "Failed to install $bundle"; exit 1; }
     rsync -avz --exclude={'/usr/share/clear','/usr/share/defaults/swupd','/usr/lib/os-release'} /opt/3rd-party/bundles/clearfraction/* /tmp/"$bundle"/
     swupd 3rd-party bundle-remove "$bundle" -F "$CF_FORMAT"
-    #dnf download --destdir=/tmp/"$bundle" `cat $bundle` || { echo "Failed to download $bundle content"; exit 1; }
     echo "content(/tmp/$bundle)" >> /mixer/local-bundles/$bundle
-    #for rpm in /tmp/"$bundle"/*.rpm; do rpm2cpio "$rpm" | cpio -D /tmp/"$bundle" -idm && rm -rf "$rpm"; done
-    # handle AVX binaries
-    [ -d /tmp/"$bundle"/V4 ] && rm -rf /tmp/"$bundle"/V4
-    [ -d /tmp/"$bundle"/V3/usr/bin ] && mv /tmp/"$bundle"/V3/usr/bin/* /tmp/"$bundle"/usr/bin/
-    [ -d /tmp/"$bundle"/V3/usr/lib64 ] && mv /tmp/"$bundle"/V3/usr/lib64/* /tmp/"$bundle"/usr/lib64/ 
-    [ -d /tmp/"$bundle"/V3/usr/lib32 ] && mv /tmp/"$bundle"/V3/usr/lib32/* /tmp/"$bundle"/usr/lib32/ 
-    [ -d /tmp/"$bundle"/V3/usr/libexec ] && mv /tmp/"$bundle"/V3/usr/libexec/* /tmp/"$bundle"/usr/libexec/
-    [ -d /tmp/"$bundle"/V3 ] && rm -rf /tmp/"$bundle"/V3
 done
 popd
 
@@ -68,8 +61,7 @@ mixer bundle add `ls /mixer/local-bundles`
 # export RELEASE=`cat mixversion`
 
 # Build the bundles and generate the update content
-mixer versions update --upstream-version "$RELEASE"
-mixer build upstream-format --new-format "$CLR_FORMAT"
+mixer build upstream-format
 
 
 # Generate artifacts
@@ -85,14 +77,17 @@ tar --zstd -cf /home/image-$RELEASE.tar.zst /tmp/repo/image
 tar cf /home/packages-$RELEASE.tar /home/packages
 
 # Deploy to GH releases
-cd /home
-hub release create -m v$RELEASE $RELEASE || { echo "Fatal: tag already exists"; exit 1; }
-for i in {1..10}; do 
-  hub release edit $RELEASE -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
-  sleep 100
-done
+#cd /home
+#hub release create -m v$RELEASE $RELEASE || { echo "Fatal: tag already exists"; exit 1; }
+#for i in {1..10}; do 
+#  hub release edit $RELEASE -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
+#  sleep 100
+#done
 
 done
+echo "Artifacts:"
+du -ch /home/*tar*
+
 
 # Trigger the endpoint rebuild
-curl -X POST ${VERCEL_REBUILD_HOOK}
+#curl -X POST ${VERCEL_REBUILD_HOOK}
