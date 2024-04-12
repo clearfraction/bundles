@@ -1,9 +1,0 @@
-waybar
-compat-atkmm-soname16-lib
-compat-cairomm-soname10-lib
-compat-glibmm-soname24-lib
-compat-libsigc++-soname20-lib
-compat-pangomm-soname14-lib
-gtkmm3-lib
-libdbusmenu-lib
-fmt-lib

@@ -1,6 +1,3 @@
-rofi-wayland
-rofi-wayland-bin
-rofi-wayland-data
 kanshi
 wlsunset
 wlr-randr
@@ -8,7 +5,6 @@ wl-clipboard
 swayblur
 swww
 autotiling
-swaylock-effects
 wf-recorder
 grim
 playerctl
