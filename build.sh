@@ -10,12 +10,12 @@ else
    echo "Format bump needed"
    exit 1
 fi
-df -h
 
 
 # Install the mixer tool and create workspace
 swupd update --quiet
-swupd bundle-add mixer package-utils git --quiet 
+swupd bundle-add mixer package-utils git --quiet
+swupd clean --all --quiet
 shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
 createrepo_c -q /home/artifact
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
@@ -42,7 +42,6 @@ tac /tmp/urls | while read url; do
     image=`echo $url | sed 's/repo/image/' | sed 's/.tar/.tar.zst/'`
     curl --fail --retry 3 -s -LO "$image" && tar xf `basename $image` --strip-components=3 -C /mixer/update/image/ && rm -rf `basename $image`   
 done
-df -h
 
 # Create new mixer config
 # mkdir ~/mixer && cd $_
@@ -80,7 +79,6 @@ for bundle in *
     [ -d /tmp/"$bundle"/usr/lib64/pkgconfig ] && sed -i 's|/usr|/opt/3rd-party/bundles/clearfraction/usr|g' /tmp/"$bundle"/usr/lib64/pkgconfig/*.pc
  done
 popd
-df -h
 
 # Wipe legacy AVX* content
 rm -rf /tmp/*/usr/share/clear/optimized-elf
@@ -95,9 +93,12 @@ sed -i 's|Exec=com.github.johnfactotum.Foliate|Exec=env GSETTINGS_SCHEMA_DIR=/op
 
 sed -i 's|Icon=brave-browser|Icon=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/product_logo_128.png|' /tmp/brave/usr/share/applications/brave-browser.desktop
 sed -i 's|Exec=/usr/bin/brave-browser-stable|Exec=/opt/3rd-party/bundles/clearfraction/opt/brave.com/brave/brave-browser --ozone-platform-hint=auto|g' /tmp/brave/usr/share/applications/brave-browser.desktop
+curl -s -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-brave-updater.sh -o /tmp/brave/usr/bin/cf-brave-updater && chmod +x /tmp/brave/usr/bin/cf-brave-updater
 
 sed -i 's|Icon=vscodium|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png|g' /tmp/vscodium/usr/share/applications/codium*.desktop
 sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --ozone-platform-hint=auto|g' /tmp/vscodium/usr/share/applications/codium*.desktop
+curl -s -L https://github.com/clearfraction/bundles/blob/master/cf-vscodium-updater.sh -o /tmp/vscodium/usr/bin/cf-vscodium-updater && chmod +x /tmp/brave/usr/bin/cf-vscodium-updater
+
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
 
@@ -129,7 +130,6 @@ mixer versions update --mix-version $RELEASE --upstream-version $RELEASE --skip-
 # mixer build upstream-format --new-format 31
 # export RELEASE=`cat mixversion`
 
-df -h
 # Build the bundles and generate the update content
 mixer build all --min-version "$MINIMAL_RELEASE" --skip-format-check
 # mixer build delta-packs     --previous-versions 2
