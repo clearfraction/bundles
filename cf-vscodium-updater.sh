@@ -68,7 +68,7 @@ if [[ ! -x "$BROWSER_EXE" ]]; then
 else
    echo "Updating VSCodium stable from $CUR_VER to $NEW_VER"
    # remove older installation via rpm
-   [[ -f /usr/bin/rpm ]] && sudo rpm -e brave-browser 2>/dev/null
+   [[ -f /usr/bin/rpm ]] && sudo rpm -e codium 2>/dev/null
 fi
 
 cd /tmp
