@@ -10,21 +10,8 @@
 FILE="" URL="" VER=""
 
 # Query for the latest release version for Linux, excluding pre-release.
-for page in {1..30}; do
-   RELVERs=$( curl -s "https://github.com/brave/brave-browser/releases?page=${page}" | awk '
-      BEGIN {
-         RS  = "<div "
-         ret = ""
-      }
-      />Release v[0-9]/ && !/Pre-release/ && /\/brave\/brave-browser\/releases\/tag\// {
-         gsub(/^.*\/tag\/v/, "", $0) # trim the left-right sides of version string
-         gsub(/".*$/, "", $0)
-         ret = ret " " $0
-      }
-      END {
-         print ret
-      }
-   ')
+for page in {1..3}; do
+   RELVERs=$(curl -s https://brave-browser-apt-release.s3.brave.com/dists/stable/main/binary-amd64/Packages | grep -oP 'Version: \K(.*)')
    if [ "$RELVERs" ]; then
       for VER in $RELVERs; do
          FILE="brave-browser_${VER}_amd64.deb"
