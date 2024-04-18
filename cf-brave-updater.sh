@@ -92,7 +92,7 @@ sudo rm -rf /opt/3rd-party/bundles/clearfraction/usr/share/doc/brave-browser/cha
 sudo rm -rf /opt/3rd-party/bundles/clearfraction/usr/share/gnome-control-center/default-apps/brave-browser.xml && sudo cp -ar data/usr/share/gnome-control-center/default-apps/brave-browser.xml /opt/3rd-party/bundles/clearfraction/usr/share/gnome-control-center/default-apps/brave-browser.xml && echo "updated gnome-control-center/default-apps/brave-browser.xml..."
 sudo rm -rf /opt/3rd-party/bundles/clearfraction/usr/share/man/man1/brave-browser*gz && sudo cp -ar data/usr/share/man/man1/brave-browser*gz /opt/3rd-party/bundles/clearfraction/usr/share/man/man1/ && echo "updated man1/brave-browser*gz..."
 sudo rm -rf /opt/3rd-party/bundles/clearfraction/usr/share/menu/brave-browser.menu && sudo cp -ar data/usr/share/menu/brave-browser.menu /opt/3rd-party/bundles/clearfraction/usr/share/menu/brave-browser.menu && echo "updated menu/brave-browser.menu"
-
+[[ ! -x /opt/3rd-party/bundles/clearfraction/usr/share/applications/brave-browser.desktop ]] && cp -ar data/usr/share/applications/brave*.desktop /opt/3rd-party/bundles/clearfraction/usr/share/applications/
 
 # sudo sed -i 's!/usr/bin/brave-browser-stable!/opt/brave.com/brave/brave-browser!g' \
 #   /usr/share/applications/brave-browser.desktop
