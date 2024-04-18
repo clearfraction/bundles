@@ -11,7 +11,7 @@ FILE="" URL="" VER=""
 
 # Query for the latest release version for Linux, excluding pre-release.
 for page in {1..3}; do
-   RELVERs=$(curl -s https://brave-browser-apt-release.s3.brave.com/dists/stable/main/binary-amd64/Packages | grep -oP 'Version: \K(.*)')
+   RELVERs=$(curl -s https://brave-browser-apt-release.s3.brave.com/dists/stable/main/binary-amd64/Packages | grep -oP 'Version: \K(.*)' | head -n 10)
    if [ "$RELVERs" ]; then
       for VER in $RELVERs; do
          FILE="brave-browser_${VER}_amd64.deb"
