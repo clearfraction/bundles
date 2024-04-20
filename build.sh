@@ -3,7 +3,7 @@
 
 # Format bump detection
 export CLR_FORMAT=$(curl --retry 3 https://download.clearlinux.org/update/$(curl --retry 3 https://download.clearlinux.org/latest)/format)
-export CF_FORMAT=$(curl --retry 3 https://download.clearfraction.cf/update/$(curl --retry 3 https://download.clearfraction.cf/update/version/latest_version)/format) 
+export CF_FORMAT=$(curl --retry 3 https://clearfraction.vercel.app/update/$(curl --retry 3 https://clearfraction.vercel.app/update/version/latest_version)/format) 
 if [ "$CF_FORMAT" -eq "$CLR_FORMAT" ]; then
    echo "No format bump needed"
 else 
@@ -13,7 +13,7 @@ fi
 
 
 # Install the mixer tool and create workspace
-swupd update --quiet
+swupd update --quiet -W20 --retry-delay=1
 swupd bundle-add mixer package-utils git --quiet
 swupd clean --all --quiet
 shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
