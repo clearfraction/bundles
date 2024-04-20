@@ -97,7 +97,7 @@ curl -s -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-bra
 
 sed -i 's|Icon=vscodium|Icon=/opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png|g' /tmp/vscodium/usr/share/applications/codium*.desktop
 sed -i 's|Exec=/usr/share/codium/codium|Exec=/opt/3rd-party/bundles/clearfraction/usr/share/codium/codium --ozone-platform-hint=auto|g' /tmp/vscodium/usr/share/applications/codium*.desktop
-curl -s -L https://github.com/clearfraction/bundles/blob/master/cf-vscodium-updater.sh -o /tmp/vscodium/usr/bin/cf-vscodium-updater && chmod +x /tmp/brave/usr/bin/cf-vscodium-updater
+curl -s -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-vscodium-updater.sh -o /tmp/vscodium/usr/bin/cf-vscodium-updater && chmod +x /tmp/brave/usr/bin/cf-vscodium-updater
 
 
 sed -i 's|Exec=shotwell|Exec=env GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas/ shotwell|' /tmp/shotwell/usr/share/applications/*Shotwell*.desktop
