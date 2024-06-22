@@ -39,9 +39,6 @@ for file in "${files[@]}"; do
     sudo rm -f "/usr$file"
 done
 
-# Remove Waydroid environment file
-sudo rm -f /etc/waydroid/environment
-
 # Remove kernel config file
 sudo rm -f /etc/kernel/cmdline.d/lxc.conf
 

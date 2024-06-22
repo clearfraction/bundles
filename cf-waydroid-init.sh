@@ -10,10 +10,10 @@ fi
 python_version=$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
 
 # Capture Environment variables excluding LS_COLORS and PYTHONPATH
-env | grep -v '^LS_COLORS=' | grep -v '^PYTHONPATH=' > /etc/waydroid/environment
+env | grep -v '^LS_COLORS=' | grep -v '^PYTHONPATH=' > /tmp/waydroid
 
 # Append PYTHONPATH to environment file
-echo "PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/python${python_version}/site-packages" >> /etc/waydroid/environment
+echo "PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/python${python_version}/site-packages" >> /tmp/waydroid
 
 # Enable and start waydroid-container.service
 systemctl enable waydroid-container.service
@@ -28,9 +28,15 @@ initialize_waydroid() {
     esac
 }
 
+# Trap to cleanup .env on EXIT
+cleanup() {
+    rm -f /tmp/waydroid
+}
+trap cleanup EXIT
+
 # Load Waydroid environment variables
 set -o allexport
-source /etc/waydroid/environment
+source /tmp/waydroid
 set +o allexport
 
 # Main script
@@ -47,3 +53,5 @@ case $choice in
     1|2) initialize_waydroid $choice ;;
     *) echo "Exiting." ;;
 esac
+
+exit 0
