@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Check if running as root (sudo)
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run with sudo or as root."
+    exit 1
+fi
+
+# Stop and disable waydroid-container.service
+systemctl stop waydroid-container.service
+systemctl disable waydroid-container.service
+
+# Remove local directories
+sudo rm -rf /var/lib/waydroid /home/.waydroid ~/waydroid ~/.share/waydroid ~/.local/share/applications/*aydroid* ~/.local/share/waydroid
+
+# Array of symlinks
+files=(
+    "/lib/systemd/system/lxc-monitord.service"
+    "/lib/systemd/system/lxc-net.service"
+    "/lib/systemd/system/lxc.service"
+    "/lib/systemd/system/lxc@.service"
+    "/lib/systemd/system/waydroid-container.service"
+    "/lib/tmpfiles.d/lxc.conf"
+    "/libexec/lxc/hooks/unmount-namespace"
+    "/libexec/lxc/lxc-apparmor-load"
+    "/libexec/lxc/lxc-containers"
+    "/libexec/lxc/lxc-monitord"
+    "/libexec/lxc/lxc-net"
+    "/libexec/lxc/lxc-user-nic"
+    "/sbin/init.lxc"
+    "/share/dbus-1/system-services/id.waydro.Container.service"
+    "/share/dbus-1/system.d/id.waydro.Container.conf"
+    "/share/polkit-1/actions"
+    "/share/lxc"
+)
+
+# Remove symlinks
+for file in "${files[@]}"; do
+    sudo rm -f "/usr$file"
+done
+
+# Remove Waydroid environment file
+sudo rm -f /etc/waydroid/environment
+
+echo "Waydroid uninstallation complete."
