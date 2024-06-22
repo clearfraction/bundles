@@ -19,7 +19,7 @@ kernel_params=(
     "psi=1"
 )
 
-# Function to check if a line already exists
+# Function to check if line already exists
 line_checker() {
     for conf in "$cmdline_dir"/*.conf; do
         if [[ -f "$conf" ]] && grep -qFx "$1" "$conf"; then

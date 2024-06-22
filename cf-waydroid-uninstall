@@ -42,4 +42,13 @@ done
 # Remove Waydroid environment file
 sudo rm -f /etc/waydroid/environment
 
-echo "Waydroid uninstallation complete."
+# Remove kernel config file
+sudo rm -f /etc/kernel/cmdline.d/lxc.conf
+
+# Update boot manager
+sudo clr-boot-manager update
+
+# Remove bundles
+sudo swupd bundle-remove kvm-host containers-basic
+
+echo "Waydroid uninstallation complete. Add the bundles again if needed"
