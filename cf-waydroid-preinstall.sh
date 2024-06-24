@@ -11,7 +11,7 @@ sudo swupd bundle-add kvm-host containers-basic
 
 # Directory for kernel configuration
 cmdline_dir="/etc/kernel/cmdline.d"
-sudo mkdir -p "$cmdline_dir"
+[ ! -d "$cmdline_dir" ] && sudo mkdir -p "$cmdline_dir"
 
 # Array for kernel params, change if needed.
 kernel_params=(
