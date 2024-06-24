@@ -68,6 +68,7 @@ source_dir="/opt/3rd-party/bundles/clearfraction/usr"
 target_dir="/usr"
 for file in "${files[@]}"; do
     if [ -e "$source_dir$file" ]; then
+        echo "Creating symlink "$target_dir$file" --> "$source_dir$file""
         ln -sf "$source_dir$file" "$target_dir$file"
     else
         echo "File $source_dir$file does not exist."
