@@ -14,6 +14,7 @@ env | grep -v '^LS_COLORS=' | grep -v '^PYTHONPATH=' > /tmp/waydroid
 
 # Append PYTHONPATH to environment file
 echo "PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/python${python_version}/site-packages" >> /tmp/waydroid
+chmod -w /tmp/waydroid
 
 # Enable and start waydroid-container.service
 systemctl enable waydroid-container.service
@@ -30,6 +31,7 @@ initialize_waydroid() {
 
 # Trap to cleanup .env on EXIT
 cleanup() {
+    chmod +w /tmp/waydroid
     rm -f /tmp/waydroid
 }
 trap cleanup EXIT
