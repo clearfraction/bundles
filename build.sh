@@ -119,6 +119,13 @@ popd
 sed -i "s|/usr/lib|env PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/webapp-manager GSETTINGS_SCHEMA_DIR=/opt/3rd-party/bundles/clearfraction/usr/share/glib-2.0/schemas GI_TYPELIB_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/girepository-1.0 LD_LIBRARY_PATH=/opt/3rd-party/bundles/clearfraction/usr/lib64/:\$LD_LIBRARY_PATH /opt/3rd-party/bundles/clearfraction/usr/lib|" /tmp/webapp-manager/usr/bin/webapp-manager
 sed -i "s|/usr/share|/opt/3rd-party/bundles/clearfraction/usr/share|g" /tmp/webapp-manager/usr/lib/webapp-manager/webapp-manager.py
 
+# Add Waydroid scripts
+curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-waydroid-preinstall.sh -o /tmp/waydroid/usr/bin/cf-waydroid-preinstall.sh
+curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-waydroid-init.sh -o /tmp/waydroid/usr/bin/cf-waydroid-init.sh
+curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-waydroid-uninstall.sh -o /tmp/waydroid/usr/bin/cf-waydroid-uninstall.sh
+chmod +x /tmp/waydroid/usr/bin/{cf-waydroid-preinstall.sh,cf-waydroid-init.sh,cf-waydroid-uninstall.sh}
+
+
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
 mixer versions update --mix-version $RELEASE --upstream-version $RELEASE --skip-format-check
