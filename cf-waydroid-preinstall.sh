@@ -11,7 +11,7 @@ sudo swupd bundle-add kvm-host containers-basic
 
 # Directory for kernel configuration
 cmdline_dir="/etc/kernel/cmdline.d"
-sudo mkdir -p "$cmdline_dir"
+[ ! -d "$cmdline_dir" ] && sudo mkdir -p "$cmdline_dir"
 
 # Array for kernel params, change if needed.
 kernel_params=(
@@ -41,5 +41,38 @@ sudo clr-boot-manager update
 
 # Enable libvirtd and additional services
 sudo systemctl enable libvirtd libvirt-guests virtlxcd virtstoraged virtnetworkd virtnodedevd
+
+# Array for creating symlinks, change if needed
+files=(
+    "/lib/systemd/system/lxc-monitord.service"
+    "/lib/systemd/system/lxc-net.service"
+    "/lib/systemd/system/lxc.service"
+    "/lib/systemd/system/lxc@.service"
+    "/lib/systemd/system/waydroid-container.service"
+    "/lib/tmpfiles.d/lxc.conf"
+    "/libexec/lxc/hooks/unmount-namespace"
+    "/libexec/lxc/lxc-apparmor-load"
+    "/libexec/lxc/lxc-containers"
+    "/libexec/lxc/lxc-monitord"
+    "/libexec/lxc/lxc-net"
+    "/libexec/lxc/lxc-user-nic"
+    "/sbin/init.lxc"
+    "/share/dbus-1/system-services/id.waydro.Container.service"
+    "/share/dbus-1/system.d/id.waydro.Container.conf"
+    "/share/polkit-1/actions"
+    "/share/lxc"
+)
+
+# Iterate over array
+source_dir="/opt/3rd-party/bundles/clearfraction/usr"
+target_dir="/usr"
+for file in "${files[@]}"; do
+    if [ -e "$source_dir$file" ]; then
+        echo "Creating symlink "$target_dir$file" --> "$source_dir$file""
+        ln -sf "$source_dir$file" "$target_dir$file"
+    else
+        echo "File $source_dir$file does not exist."
+    fi
+done
 
 echo "Setup complete. Restart for the bootloader configuration to take effect"
