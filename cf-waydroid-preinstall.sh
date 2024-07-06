@@ -50,16 +50,11 @@ files=(
     "/lib/systemd/system/lxc@.service"
     "/lib/systemd/system/waydroid-container.service"
     "/lib/tmpfiles.d/lxc.conf"
-    "/libexec/lxc/hooks/unmount-namespace"
-    "/libexec/lxc/lxc-apparmor-load"
-    "/libexec/lxc/lxc-containers"
-    "/libexec/lxc/lxc-monitord"
-    "/libexec/lxc/lxc-net"
-    "/libexec/lxc/lxc-user-nic"
     "/sbin/init.lxc"
     "/share/dbus-1/system-services/id.waydro.Container.service"
     "/share/dbus-1/system.d/id.waydro.Container.conf"
-    "/share/polkit-1/actions"
+    "/share/polkit-1/actions/id.waydro.Container.policy"
+    "/libexec/lxc"
     "/share/lxc"
 )
 
@@ -74,5 +69,8 @@ for file in "${files[@]}"; do
         echo "File $source_dir$file does not exist."
     fi
 done
+
+# Fix for dbus error (find issue here https://github.com/waydroid/waydroid/issues/854)
+dbus-send --print-reply --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig
 
 echo "Setup complete. Restart for the bootloader configuration to take effect"
