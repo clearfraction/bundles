@@ -16,9 +16,12 @@ env | grep -v '^LS_COLORS=' | grep -v '^PYTHONPATH=' > /tmp/waydroid
 echo "PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/python${python_version}/site-packages" >> /tmp/waydroid
 chmod -w /tmp/waydroid
 
-# Enable and start waydroid-container.service
-systemctl enable waydroid-container.service
-systemctl start waydroid-container.service
+# Trap to cleanup .env on EXIT
+cleanup() {
+    chmod +w /tmp/waydroid
+    rm -f /tmp/waydroid
+}
+trap cleanup EXIT
 
 # Function to initialize Waydroid based on user selection
 initialize_waydroid() {
@@ -28,13 +31,6 @@ initialize_waydroid() {
         *) return 1 ;;
     esac
 }
-
-# Trap to cleanup .env on EXIT
-cleanup() {
-    chmod +w /tmp/waydroid
-    rm -f /tmp/waydroid
-}
-trap cleanup EXIT
 
 # Load Waydroid environment variables
 set -o allexport
@@ -55,5 +51,19 @@ case $choice in
     1|2) initialize_waydroid $choice ;;
     *) echo "Exiting." ;;
 esac
+
+sed -i '/^lxc\.apparmor\.profile/s/^/# /' /var/lib/waydroid/lxc/waydroid/config
+
+# Enable and start waydroid-container.service
+systemctl enable waydroid-container.service
+systemctl start waydroid-container.service
+
+# Check the status of waydroid-container.service
+if ! systemctl is-active --quiet waydroid-container.service; then
+    echo "waydroid-container.service failed to start. Exiting."
+    systemctl stop waydroid-container.service
+    systemctl disable waydroid-container.service
+    exit 1
+fi
 
 exit 0
