@@ -1,7 +1,6 @@
 #!/bin/bash
 #-------------------------------------------------------------------------------
 # Install and update script for VSCodium (https://community.clearlinux.org/t/chrome-on-cl-again/9192/4)
-# https://github.com/brave/brave-browser/releases
 # Created by @marioroy, hacked by @paulcarroty for Clear Fraction Project
 #-------------------------------------------------------------------------------
 
@@ -93,24 +92,8 @@ sudo rm -rf /opt/3rd-party/bundles/clearfraction/usr/share/mime/packages/codium-
 sudo rm -rf /opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png && sudo cp -ar data/usr/share/pixmaps/vscodium.png /opt/3rd-party/bundles/clearfraction/usr/share/pixmaps/vscodium.png && echo "updated logo..."
 sudo rm -rf /opt/3rd-party/bundles/clearfraction/usr/share/zsh && sudo cp -ar data/usr/share/zsh /opt/3rd-party/bundles/clearfraction/usr/share/ && echo "updated zsh completion..."
 
-
-# sudo sed -i 's!/usr/bin/brave-browser-stable!/opt/brave.com/brave/brave-browser!g' \
-#   /usr/share/applications/brave-browser.desktop
-# sudo sed -i 's!^\(Exec=\)\(.*\)!\1env FONTCONFIG_PATH=/usr/share/defaults/fonts \2!g' \
-#   /usr/share/applications/brave-browser.desktop
-
 popd >/dev/null
 rm -fr /tmp/update.$$
-
-# Not needed in CF - handled by brave.desktop 
-# Add icons to the system icons; installs to /usr/share/icons/hicolor/.
-#for icon in \
-#   product_logo_64.png product_logo_48.png product_logo_16.png product_logo_32.png \
-#   product_logo_24.png product_logo_256.png product_logo_128.png
-#do 
-#   size=$(echo "$icon" | sed 's/[^0-9]//g')
-#   sudo xdg-icon-resource install --size "$size" /opt/brave.com/brave/${icon} "brave-browser"
-#done
 
 sync
 echo "OK"
