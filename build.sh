@@ -125,6 +125,14 @@ curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-waydro
 curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-waydroid-uninstall.sh -o /tmp/waydroid/usr/bin/cf-waydroid-uninstall.sh
 chmod +x /tmp/waydroid/usr/bin/{cf-waydroid-preinstall.sh,cf-waydroid-init.sh,cf-waydroid-uninstall.sh}
 
+# Add Zed script
+curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-zed-updater.sh -o /tmp/zed/usr/bin/cf-zed-updater.sh
+chmod +x /tmp/zed/usr/bin/cf-zed-updater.sh
+
+# Add termfilechooser scripts
+mkdir -p /tmp/xdg-desktop-portal-termfilechooser/usr/bin
+curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-termfilechooser-postinstall.sh -o   /tmp/xdg-desktop-portal-termfilechooser/usr/bin/cf-termfilechooser-postinstall.sh
+curl -L https://raw.githubusercontent.com/clearfraction/bundles/master/cf-termfilechooser-postremove.sh  -o   /tmp/xdg-desktop-portal-termfilechooser/usr/bin/cf-termfilechooser-postremove.sh
 
 # Add bundles to the mix
 mixer bundle add `ls /mixer/local-bundles`
