@@ -77,7 +77,7 @@ if [[ ! -f "$FILE" ]]; then
    if [[ ! -f "$FILE" || -n $(grep "^Not Found" "$FILE") ]]; then
       rm -f "$FILE"
       echo "ERROR: $FILE (No such file at download URL)"
-      echo "https://github.com/brave/brave-browser/releases"
+      echo "https://github.com/VSCodium/vscodium/releases"
       exit 1
    fi
 fi
