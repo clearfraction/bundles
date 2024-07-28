@@ -35,17 +35,6 @@ jobs:
     needs: mixer
     runs-on: ubuntu-latest
     steps:
-      - run: curl -LO https://raw.githubusercontent.com/clearfraction/bundles/master/Dockerfile
-      - name: Credentials
-        env: 
-          EMAIL: ${{ secrets.EMAIL }}
-          API_KEY: ${{ secrets.API_KEY }}
-        run: |
-          cat > ~/.netrc <<EOF
-            machine api.heroku.com
-              login $EMAIL
-              password $API_KEY
-          EOF
       - name: CD
         env:
           APP: "clearfraction"
