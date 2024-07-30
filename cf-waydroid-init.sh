@@ -16,10 +16,17 @@ env | grep -v '^LS_COLORS=' | grep -v '^PYTHONPATH=' > /tmp/waydroid
 echo "PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/python${python_version}/site-packages" >> /tmp/waydroid
 chmod -w /tmp/waydroid
 
+# export PYTHONPATH globally to fix Waydroid issue
+
+export ORIGIN_PYTHONPATH=${PYTHONPATH}
+export PYTHONPATH=$(echo /opt/3rd-party/bundles/clearfraction/usr/lib/python*/)site-packages/:${PYTHONPATH}
+
 # Trap to cleanup .env on EXIT
 cleanup() {
     chmod +w /tmp/waydroid
     rm -f /tmp/waydroid
+    export PYTHONPATH=${ORIGIN_PYTHONPATH}
+    unset  $ORIGIN_PYTHONPATH
 }
 trap cleanup EXIT
 
