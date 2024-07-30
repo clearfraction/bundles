@@ -77,7 +77,7 @@ dbus-send --print-reply --system --type=method_call --dest=org.freedesktop.DBus 
 # export PYTHONPATH globally to fix Waydroid issue
 
 sudo tee -a /etc/environment.d/11-cf-waydroid.conf << EOF
-PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/python3.12/site-packages/
+PYTHONPATH=$(echo /opt/3rd-party/bundles/clearfraction/usr/lib/python*/)site-packages/
 EOF
 
 echo "Setup complete. Restart for the bootloader configuration to take effect"
