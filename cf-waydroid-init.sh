@@ -18,15 +18,14 @@ chmod -w /tmp/waydroid
 
 # export PYTHONPATH globally to fix Waydroid issue
 
-export ORIGIN_PYTHONPATH=${PYTHONPATH}
-export PYTHONPATH=$(echo /opt/3rd-party/bundles/clearfraction/usr/lib/python*/)site-packages/:${PYTHONPATH}
+sudo tee -a /etc/environment.d/11-cf-waydroid.conf << EOF
+PYTHONPATH=/opt/3rd-party/bundles/clearfraction/usr/lib/python3.12/site-packages/
+EOF
 
 # Trap to cleanup .env on EXIT
 cleanup() {
     chmod +w /tmp/waydroid
     rm -f /tmp/waydroid
-    export PYTHONPATH=${ORIGIN_PYTHONPATH}
-    unset  $ORIGIN_PYTHONPATH
 }
 trap cleanup EXIT
 
