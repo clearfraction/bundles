@@ -74,10 +74,4 @@ done
 # Fix for dbus error (find issue here https://github.com/waydroid/waydroid/issues/854)
 dbus-send --print-reply --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig
 
-# export PYTHONPATH globally to fix Waydroid issue
-
-sudo tee -a /etc/environment.d/11-cf-waydroid.conf << EOF
-PYTHONPATH=$(echo /opt/3rd-party/bundles/clearfraction/usr/lib/python*/)site-packages/
-EOF
-
 echo "Setup complete. Restart for the bootloader configuration to take effect"
