@@ -36,12 +36,12 @@ NEW_VER="$VER"
 BROWSER_EXE="/opt/3rd-party/bundles/clearfraction/usr/bin/zed"
 
 if [[ -x "$BROWSER_EXE" ]]; then
-   CUR_VER=$($BROWSER_EXE --version 2>/dev/null | grep -oP '[\d\.]+'))
+   CUR_VER=$($BROWSER_EXE --version 2>/dev/null | grep -oP '[\d\.]+')
 else
    CUR_VER="not-installed"
 fi
 
-if [[ "${CUR_VER}" == "${NEW_VER:0:6}" ]]; then
+if [[ "${CUR_VER}" == "${NEW_VER}" ]]; then
    echo "Zed stable $CUR_VER (current)"
    exit 0
 elif [[ "$USER" == "root" ]]; then
@@ -76,7 +76,7 @@ if [[ ! -f "$FILE" ]]; then
    if [[ ! -f "$FILE" || -n $(grep "^Not Found" "$FILE") ]]; then
       rm -f "$FILE"
       echo "ERROR: $FILE (No such file at download URL)"
-      echo "https://github.com/brave/brave-browser/releases"
+      echo "https://github.com/clearfraction/zed/releases"
       exit 1
    fi
 fi
