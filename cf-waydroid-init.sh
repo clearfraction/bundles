@@ -22,6 +22,7 @@ chmod -w /tmp/waydroid
 cleanup() {
     chmod +w /tmp/waydroid
     rm -f /tmp/waydroid
+    systemctl --user unset-environment PYTHONPATH
 }
 trap cleanup EXIT
 
