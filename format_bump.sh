@@ -82,7 +82,7 @@ tar cf /home/packages-$RELEASE.tar /home/packages
 cd /home
 hub release create -m v$RELEASE $RELEASE || { echo "Fatal: tag already exists"; exit 1; }
 for i in {1..10}; do 
-  hub release edit $RELEASE -m v$RELEASE -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
+  hub release edit $RELEASE -m v$RELEASE -m "format bump" -a repo-$RELEASE.tar -a mixer-$RELEASE.tar -a packages-$RELEASE.tar -a image-$RELEASE.tar.zst && break
   sleep 100
 done
 
