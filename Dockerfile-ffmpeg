@@ -6,7 +6,7 @@ ENV PATH=/usr/bin/haswell:/usr/local/bin:/usr/bin:/opt/3rd-party/bundles/clearfr
     FONTCONFIG_PATH=/usr/share/defaults/fonts
 
 RUN swupd bundle-add lib-opengl gdk-pixbuf pulseaudio mpg123 dhcp-server openldap -y && \
-    swupd 3rd-party add clearfraction https://download.clearfraction.cf/update -y && \
+    swupd 3rd-party add clearfraction https://clearfraction.vercel.app/update -y && \
     swupd 3rd-party bundle-add codecs -y && \
     swupd 3rd-party clean --all && swupd clean --all
     
