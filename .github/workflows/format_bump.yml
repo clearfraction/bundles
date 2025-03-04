@@ -1,7 +1,7 @@
 name: format_bump
 on:
-  #schedule:
-  #  - cron: "0 22 * * 3"
+  schedule:
+   - cron: "0 22 * * 5"
   workflow_dispatch:
   repository_dispatch:
     types: [build]
