@@ -17,6 +17,8 @@ swupd update --quiet -W20 --retry-delay=1
 swupd bundle-add mixer package-utils git --quiet
 swupd clean --all --quiet
 shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
+# clean duplicate packages
+mv /home/artifact/*/*.rpm /home/artifact/
 createrepo_c -q /home/artifact
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
                    --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64 \
