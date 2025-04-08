@@ -19,7 +19,7 @@ jobs:
           repo: clearfraction/mass-rebuild
           workflow: mass-rebuild.yml
           check_artifacts: true
-          path: /home
+          path: /home/artifact
           allow_forks: false
       - name: Build new release
         shell: bash
