@@ -18,7 +18,10 @@ swupd bundle-add mixer package-utils git --quiet
 swupd clean --all --quiet
 shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
 # clean duplicate packages
-mv /home/artifact/*/*.rpm /home/artifact/
+mkdir /home/tmp
+mv /home/artifact/*/*.rpm /home/artifact/*.rpm /home/tmp/
+mv /home/artifact/*.rpm /home/tmp/
+rm -rf mv /home/artifact && mv /home/tmp /home/artifact
 createrepo_c -q /home/artifact
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
                    --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64 \
@@ -157,6 +160,9 @@ tar cf /home/mixer-$RELEASE.tar /mixer
 tar cf /home/repo-$RELEASE.tar /tmp/repo/update
 tar --zstd -cf /home/image-$RELEASE.tar.zst /tmp/repo/image
 mv /home/artifact /home/packages && tar cf /home/packages-$RELEASE.tar /home/packages
+
+# Print artifact sizes
+ls -lh /home/mixer-$RELEASE.tar /home/repo-$RELEASE.tar /home/image-$RELEASE.tar.zst /home/packages-$RELEASE.tar
 
 # Deploy to GH releases
 cd /home
